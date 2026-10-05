@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TravelBD.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1693fdca80958eb09ea685bd76922886ae2210f3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da182c4e8944916258716ef10feec2a6c0b3c16d")]
 [assembly: System.Reflection.AssemblyProductAttribute("TravelBD.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TravelBD.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

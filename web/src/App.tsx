@@ -2,16 +2,54 @@ import { useState, useEffect } from 'react';
 import { SearchBar } from './components/SearchBar';
 import { RouteView } from './components/RouteView';
 import { DestinationGuide } from './components/DestinationGuide';
+import { AdminPanel } from './components/AdminPanel';
 import { travelApi } from './services/api';
 import type { LocationDto, RouteSearchResultDto, DestinationDetailDto } from './types/travel';
-import { Compass, Sparkles, Navigation } from 'lucide-react';
+import { Compass, Sparkles, Navigation, Settings } from 'lucide-react';
 
 export function App() {
+  const [isAdminView, setIsAdminView] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('travelbd_admin_token') === 'travelbd-admin-secret-2026';
+  });
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [secretInput, setSecretInput] = useState('');
+  const [authError, setAuthError] = useState('');
+
   const [destinations, setDestinations] = useState<LocationDto[]>([]);
   const [searchResult, setSearchResult] = useState<RouteSearchResultDto | null>(null);
   const [destinationGuide, setDestinationGuide] = useState<DestinationDetailDto | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Check URL query or hash for hidden admin route (e.g. /?admin=1 or #admin)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasAdminParam = urlParams.has('admin') || window.location.hash === '#admin';
+
+    if (hasAdminParam) {
+      if (isAuthenticated) {
+        setIsAdminView(true);
+      } else {
+        setShowAuthModal(true);
+      }
+    }
+
+    // Secret shortcut listener: Ctrl + Shift + A
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        if (isAuthenticated) {
+          setIsAdminView(prev => !prev);
+        } else {
+          setShowAuthModal(true);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isAuthenticated]);
 
   // Load popular hubs initially and run default plan
   useEffect(() => {
@@ -60,6 +98,14 @@ export function App() {
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
             <div
+              onClick={() => {
+                if (isAuthenticated) {
+                  setIsAdminView(prev => !prev);
+                } else {
+                  setShowAuthModal(true);
+                }
+              }}
+              title="GhurboBD"
               style={{
                 width: '36px',
                 height: '36px',
@@ -68,7 +114,8 @@ export function App() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 0 15px rgba(16, 185, 129, 0.4)'
+                boxShadow: '0 0 15px rgba(16, 185, 129, 0.4)',
+                cursor: 'pointer'
               }}
             >
               <Compass size={22} color="#fff" />
@@ -83,7 +130,29 @@ export function App() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            {/* Admin toggle: Only shown if already logged in as admin */}
+            {isAuthenticated && (
+              <button
+                onClick={() => setIsAdminView(!isAdminView)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontSize: '0.8rem',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: 'var(--radius-full)',
+                  background: isAdminView ? 'var(--primary)' : 'rgba(255, 255, 255, 0.08)',
+                  color: '#fff',
+                  border: '1px solid var(--border)',
+                  fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                <Settings size={14} /> {isAdminView ? 'Live App' : 'Operations'}
+              </button>
+            )}
+
             <span
               style={{
                 fontSize: '0.75rem',
@@ -95,14 +164,18 @@ export function App() {
                 fontWeight: 600
               }}
             >
-              Phase 1: Southeastern Corridor Active
+              Southeastern Corridor Active
             </span>
           </div>
         </div>
       </header>
 
-      {/* Main Content Area */}
-      <main style={{ flex: 1, maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 1.5rem' }}>
+      {/* Admin Panel View */}
+      {isAdminView ? (
+        <AdminPanel onExit={() => setIsAdminView(false)} />
+      ) : (
+        /* Main Content Area */
+        <main style={{ flex: 1, maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 1.5rem' }}>
         
         {/* Hero Title */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -189,11 +262,69 @@ export function App() {
           <DestinationGuide guide={destinationGuide} />
         )}
       </main>
+      )}
 
       {/* Footer */}
       <footer style={{ borderTop: '1px solid var(--border)', padding: '1.5rem 2rem', textAlign: 'center', color: 'var(--text-dim)', fontSize: '0.85rem' }}>
         GhurboBD • Mini-Rome2rio for Bangladesh • Chittagong, Cox's Bazar, Bandarban & Rangamati
       </footer>
+
+      {/* Secret Admin Authentication Modal */}
+      {showAuthModal && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
+          <div style={{ background: '#0f172a', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', width: '100%', maxWidth: '400px', padding: '1.75rem', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)' }}>
+            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1.2rem', color: '#fff', fontWeight: 700 }}>Management Authorization</h3>
+            <p style={{ margin: '0 0 1.25rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Enter your master deployment key to unlock system operations.</p>
+            
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              if (secretInput === 'travelbd-admin-secret-2026') {
+                localStorage.setItem('travelbd_admin_token', secretInput);
+                setIsAuthenticated(true);
+                setIsAdminView(true);
+                setShowAuthModal(false);
+                setSecretInput('');
+                setAuthError('');
+              } else {
+                setAuthError('Invalid deployment key.');
+              }
+            }}>
+              <input
+                type="password"
+                placeholder="Secret Access Key"
+                autoFocus
+                required
+                value={secretInput}
+                onChange={(e) => setSecretInput(e.target.value)}
+                style={{ width: '100%', background: 'rgba(255,255,255,0.06)', border: authError ? '1px solid #f43f5e' : '1px solid var(--border)', padding: '0.65rem 0.85rem', borderRadius: 'var(--radius-md)', color: '#fff', fontSize: '0.9rem', marginBottom: '0.75rem' }}
+              />
+
+              {authError && (
+                <div style={{ color: '#f87171', fontSize: '0.8rem', marginBottom: '0.75rem' }}>
+                  {authError}
+                </div>
+              )}
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.6rem' }}>
+                <button
+                  type="button"
+                  onClick={() => { setShowAuthModal(false); setAuthError(''); setSecretInput(''); }}
+                  style={{ background: 'rgba(255,255,255,0.06)', border: 'none', padding: '0.55rem 1rem', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.85rem' }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  style={{ padding: '0.55rem 1.25rem', fontSize: '0.85rem' }}
+                >
+                  Authorize
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
