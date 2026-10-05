@@ -1,0 +1,6 @@
+@TravelBD.Api_HostAddress = http://localhost:5121
+
+GET {{TravelBD.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,17 @@
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.csproj.AssemblyReference.cache
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.AssemblyInfoInputs.cache
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.AssemblyInfo.cs
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Travel\src\TravelBD.Infrastructure\bin\Debug\net9.0\TravelBD.Infrastructure.deps.json
+D:\Travel\src\TravelBD.Infrastructure\bin\Debug\net9.0\TravelBD.Infrastructure.dll
+D:\Travel\src\TravelBD.Infrastructure\bin\Debug\net9.0\TravelBD.Infrastructure.pdb
+D:\Travel\src\TravelBD.Infrastructure\bin\Debug\net9.0\TravelBD.Application.dll
+D:\Travel\src\TravelBD.Infrastructure\bin\Debug\net9.0\TravelBD.Domain.dll
+D:\Travel\src\TravelBD.Infrastructure\bin\Debug\net9.0\TravelBD.Domain.pdb
+D:\Travel\src\TravelBD.Infrastructure\bin\Debug\net9.0\TravelBD.Application.pdb
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.30A2BE8E.Up2Date
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.dll
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\refint\TravelBD.Infrastructure.dll
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.pdb
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\ref\TravelBD.Infrastructure.dll
