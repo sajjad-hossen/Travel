@@ -15,3 +15,6 @@ D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.d
 D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\refint\TravelBD.Infrastructure.dll
 D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.pdb
 D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\ref\TravelBD.Infrastructure.dll
+D:\Travel\src\TravelBD.Infrastructure\bin\Debug\net9.0\TravelBD.Infrastructure.runtimeconfig.json
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.sourcelink.json
+D:\Travel\src\TravelBD.Infrastructure\obj\Debug\net9.0\TravelBD.Infrastructure.genruntimeconfig.cache

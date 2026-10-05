@@ -13,3 +13,4 @@ D:\Travel\src\TravelBD.Application\obj\Debug\net9.0\TravelBD.Application.dll
 D:\Travel\src\TravelBD.Application\obj\Debug\net9.0\refint\TravelBD.Application.dll
 D:\Travel\src\TravelBD.Application\obj\Debug\net9.0\TravelBD.Application.pdb
 D:\Travel\src\TravelBD.Application\obj\Debug\net9.0\ref\TravelBD.Application.dll
+D:\Travel\src\TravelBD.Application\obj\Debug\net9.0\TravelBD.Application.sourcelink.json

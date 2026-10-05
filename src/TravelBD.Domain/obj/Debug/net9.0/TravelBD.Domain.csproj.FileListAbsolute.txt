@@ -9,3 +9,4 @@ D:\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.dll
 D:\Travel\src\TravelBD.Domain\obj\Debug\net9.0\refint\TravelBD.Domain.dll
 D:\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.pdb
 D:\Travel\src\TravelBD.Domain\obj\Debug\net9.0\ref\TravelBD.Domain.dll
+D:\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.sourcelink.json
