@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TravelBD.Application.Security;
 using TravelBD.Domain.Entities;
 using TravelBD.Domain.Enums;
 
@@ -8,6 +9,18 @@ public static class DbSeeder
 {
     public static async Task SeedAsync(TravelDbContext context)
     {
+        if (!await context.Users.AnyAsync(u => u.Role == UserRole.Admin))
+        {
+            context.Users.Add(new User
+            {
+                Name = "Admin",
+                Email = "admin@travelbd.com",
+                PasswordHash = PasswordHasher.Hash("Admin@12345"),
+                Role = UserRole.Admin
+            });
+            await context.SaveChangesAsync();
+        }
+
         if (await context.Locations.AnyAsync())
         {
             return; // Already seeded

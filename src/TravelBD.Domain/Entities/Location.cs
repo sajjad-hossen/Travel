@@ -25,4 +25,5 @@ public class Location
     public ICollection<Attraction> Attractions { get; set; } = new List<Attraction>();
     public ICollection<Accommodation> Accommodations { get; set; } = new List<Accommodation>();
     public ICollection<DestinationAdvisory> Advisories { get; set; } = new List<DestinationAdvisory>();
+    public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 }

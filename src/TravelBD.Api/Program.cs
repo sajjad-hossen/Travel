@@ -1,3 +1,6 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using TravelBD.Infrastructure;
 using TravelBD.Infrastructure.Persistence;
 
@@ -20,6 +23,29 @@ builder.Services.AddCors(options =>
 // ── Infrastructure (DB + Repositories + Managers) ────────────────────────────
 builder.Services.AddInfrastructure(builder.Configuration);
 
+// ── Authentication (JWT) ──────────────────────────────────────────────────────
+var jwtSection = builder.Configuration.GetSection("Jwt");
+var jwtKey = jwtSection["Key"] ?? "travelbd-dev-jwt-signing-key-change-me-2026";
+var jwtIssuer = jwtSection["Issuer"] ?? "TravelBD";
+var jwtAudience = jwtSection["Audience"] ?? "TravelBD";
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtAudience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 // ─────────────────────────────────────────────────────────────────────────────
 var app = builder.Build();
 
@@ -34,6 +60,7 @@ using (var scope = app.Services.CreateScope())
 // ── Middleware Pipeline ───────────────────────────────────────────────────────
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

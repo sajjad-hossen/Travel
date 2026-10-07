@@ -5,6 +5,7 @@ using TravelBD.Application.Interfaces;
 using TravelBD.Application.Managers;
 using TravelBD.Infrastructure.Persistence;
 using TravelBD.Infrastructure.Repositories;
+using TravelBD.Infrastructure.Security;
 
 namespace TravelBD.Infrastructure;
 
@@ -33,12 +34,19 @@ public static class DependencyInjection
         services.AddScoped<IRouteRepository, RouteRepository>();
         services.AddScoped<IAdminLocationRepository, AdminLocationRepository>();
         services.AddScoped<IAdminRouteRepository, AdminRouteRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 
         // ── Managers (Business Logic Layer) ───────────────────────────────────
         services.AddScoped<ILocationManager, LocationManager>();
         services.AddScoped<IRouteManager, RouteManager>();
         services.AddScoped<IAdminLocationManager, AdminLocationManager>();
         services.AddScoped<IAdminRouteManager, AdminRouteManager>();
+        services.AddScoped<IAuthManager, AuthManager>();
+        services.AddScoped<IFeedbackManager, FeedbackManager>();
+
+        // ── Security ──────────────────────────────────────────────────────────
+        services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
         return services;
     }

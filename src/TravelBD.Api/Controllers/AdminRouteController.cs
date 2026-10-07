@@ -1,12 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TravelBD.Api.Filters;
 using TravelBD.Application.DTOs;
 using TravelBD.Application.Interfaces;
 
 namespace TravelBD.Api.Controllers;
 
 [ApiController]
-[AdminApiKey]
+[Authorize(Roles = "Admin")]
 [Route("api/v1/admin/routes")]
 public class AdminRouteController : ControllerBase
 {

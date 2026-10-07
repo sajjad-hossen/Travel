@@ -15,6 +15,8 @@ public class TravelDbContext : DbContext
     public DbSet<Attraction> Attractions => Set<Attraction>();
     public DbSet<Accommodation> Accommodations => Set<Accommodation>();
     public DbSet<DestinationAdvisory> DestinationAdvisories => Set<DestinationAdvisory>();
+    public DbSet<User> Users => Set<User>();
+    public DbSet<Feedback> Feedbacks => Set<Feedback>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -78,6 +80,31 @@ public class TravelDbContext : DbContext
                 .WithMany(l => l.Advisories)
                 .HasForeignKey(e => e.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasIndex(e => e.Email).IsUnique();
+            entity.Property(e => e.Name).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.Email).HasMaxLength(180).IsRequired();
+            entity.Property(e => e.PasswordHash).IsRequired();
+        });
+
+        modelBuilder.Entity<Feedback>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Comment).HasMaxLength(2000).IsRequired();
+
+            entity.HasOne(e => e.User)
+                .WithMany(u => u.Feedbacks)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(e => e.Location)
+                .WithMany(l => l.Feedbacks)
+                .HasForeignKey(e => e.LocationId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
     }
 }

@@ -10,3 +10,15 @@ D:\Travel\src\TravelBD.Domain\obj\Debug\net9.0\refint\TravelBD.Domain.dll
 D:\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.pdb
 D:\Travel\src\TravelBD.Domain\obj\Debug\net9.0\ref\TravelBD.Domain.dll
 D:\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.sourcelink.json
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\bin\Debug\net9.0\TravelBD.Domain.deps.json
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\bin\Debug\net9.0\TravelBD.Domain.dll
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\bin\Debug\net9.0\TravelBD.Domain.pdb
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.AssemblyInfoInputs.cache
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.AssemblyInfo.cs
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.csproj.CoreCompileInputs.cache
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.sourcelink.json
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.dll
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\obj\Debug\net9.0\refint\TravelBD.Domain.dll
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\obj\Debug\net9.0\TravelBD.Domain.pdb
+C:\Users\TN-99647\Documents\Travel\src\TravelBD.Domain\obj\Debug\net9.0\ref\TravelBD.Domain.dll

@@ -133,6 +133,38 @@ namespace TravelBD.Infrastructure.Persistence.Migrations
                     b.ToTable("DestinationAdvisories");
                 });
 
+            modelBuilder.Entity("TravelBD.Domain.Entities.Feedback", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LocationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Feedbacks");
+                });
+
             modelBuilder.Entity("TravelBD.Domain.Entities.Location", b =>
                 {
                     b.Property<Guid>("Id")
@@ -270,6 +302,40 @@ namespace TravelBD.Infrastructure.Persistence.Migrations
                     b.ToTable("TransportOptions");
                 });
 
+            modelBuilder.Entity("TravelBD.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(180)
+                        .HasColumnType("character varying(180)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("TravelBD.Domain.Entities.Accommodation", b =>
                 {
                     b.HasOne("TravelBD.Domain.Entities.Location", "Location")
@@ -301,6 +367,24 @@ namespace TravelBD.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("TravelBD.Domain.Entities.Feedback", b =>
+                {
+                    b.HasOne("TravelBD.Domain.Entities.Location", "Location")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("TravelBD.Domain.Entities.User", "User")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TravelBD.Domain.Entities.RouteSegment", b =>
@@ -341,6 +425,8 @@ namespace TravelBD.Infrastructure.Persistence.Migrations
 
                     b.Navigation("Attractions");
 
+                    b.Navigation("Feedbacks");
+
                     b.Navigation("IncomingRoutes");
 
                     b.Navigation("OutgoingRoutes");
@@ -349,6 +435,11 @@ namespace TravelBD.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("TravelBD.Domain.Entities.RouteSegment", b =>
                 {
                     b.Navigation("TransportOptions");
+                });
+
+            modelBuilder.Entity("TravelBD.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Feedbacks");
                 });
 #pragma warning restore 612, 618
         }
