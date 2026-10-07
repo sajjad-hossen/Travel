@@ -8,7 +8,39 @@ public record AttractionDto(
     string? BestTimeToVisit,
     decimal EntryFeeBdt,
     string? ImageUrl,
-    string? Category
+    string? Category,
+    double? Latitude,
+    double? Longitude,
+    double? DistanceFromTownKm,
+    int? TravelTimeMinutes,
+    string? HowToReach,
+    List<string> GalleryImages,
+    double AverageRating,
+    int ReviewCount
+);
+
+public record AttractionDetailDto(
+    Guid Id,
+    string Name,
+    string? BanglaName,
+    string? Description,
+    string? BestTimeToVisit,
+    decimal EntryFeeBdt,
+    string? ImageUrl,
+    string? Category,
+    double? Latitude,
+    double? Longitude,
+    double? DistanceFromTownKm,
+    int? TravelTimeMinutes,
+    string? HowToReach,
+    List<string> GalleryImages,
+    double AverageRating,
+    int ReviewCount,
+    Guid LocationId,
+    string LocationName,
+    double? LocationLatitude,
+    double? LocationLongitude,
+    List<FeedbackDto> Reviews
 );
 
 public record AccommodationDto(

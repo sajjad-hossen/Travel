@@ -63,6 +63,58 @@ export interface AttractionDto {
   entryFeeBdt: number;
   imageUrl?: string;
   category?: string;
+  latitude?: number;
+  longitude?: number;
+  distanceFromTownKm?: number;
+  travelTimeMinutes?: number;
+  howToReach?: string;
+  galleryImages: string[];
+  averageRating: number;
+  reviewCount: number;
+}
+
+export interface FeedbackDto {
+  id: string;
+  userId: string;
+  userName: string;
+  locationId?: string;
+  locationName?: string;
+  attractionId?: string;
+  attractionName?: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
+
+export interface AttractionDetailDto {
+  id: string;
+  name: string;
+  banglaName?: string;
+  description?: string;
+  bestTimeToVisit?: string;
+  entryFeeBdt: number;
+  imageUrl?: string;
+  category?: string;
+  latitude?: number;
+  longitude?: number;
+  distanceFromTownKm?: number;
+  travelTimeMinutes?: number;
+  howToReach?: string;
+  galleryImages: string[];
+  averageRating: number;
+  reviewCount: number;
+  locationId: string;
+  locationName: string;
+  locationLatitude?: number;
+  locationLongitude?: number;
+  reviews: FeedbackDto[];
+}
+
+export interface AuthUser {
+  userId: string;
+  name: string;
+  email: string;
+  role: 'Customer' | 'Admin';
 }
 
 export interface AccommodationDto {

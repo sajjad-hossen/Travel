@@ -3,18 +3,22 @@ import { SearchBar } from './components/SearchBar';
 import { RouteView } from './components/RouteView';
 import { DestinationGuide } from './components/DestinationGuide';
 import { AdminPanel } from './components/AdminPanel';
-import { travelApi } from './services/api';
-import type { LocationDto, RouteSearchResultDto, DestinationDetailDto } from './types/travel';
-import { Compass, Sparkles, Navigation, Settings } from 'lucide-react';
+import { AttractionDetail } from './components/AttractionDetail';
+import { travelApi, authApi, authStore } from './services/api';
+import type { LocationDto, RouteSearchResultDto, DestinationDetailDto, AuthUser } from './types/travel';
+import { Compass, Sparkles, Navigation, Settings, User as UserIcon, LogOut } from 'lucide-react';
 
 export function App() {
   const [isAdminView, setIsAdminView] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('travelbd_admin_token') === 'travelbd-admin-secret-2026';
-  });
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => authStore.getUser());
+  const isAuthenticated = currentUser?.role === 'Admin';
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [secretInput, setSecretInput] = useState('');
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+  const [authForm, setAuthForm] = useState({ name: '', email: '', password: '' });
   const [authError, setAuthError] = useState('');
+  const [authBusy, setAuthBusy] = useState(false);
+
+  const [selectedAttractionId, setSelectedAttractionId] = useState<string | null>(null);
 
   const [destinations, setDestinations] = useState<LocationDto[]>([]);
   const [searchResult, setSearchResult] = useState<RouteSearchResultDto | null>(null);
@@ -153,6 +157,56 @@ export function App() {
               </button>
             )}
 
+            {/* Account: login/register for customers, or logout if signed in */}
+            {currentUser ? (
+              <button
+                onClick={() => {
+                  authApi.logout();
+                  setCurrentUser(null);
+                  setIsAdminView(false);
+                }}
+                title={`Signed in as ${currentUser.name}`}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontSize: '0.8rem',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: 'var(--radius-full)',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  color: '#fff',
+                  border: '1px solid var(--border)',
+                  fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                <LogOut size={14} /> {currentUser.name}
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setAuthMode('login');
+                  setAuthError('');
+                  setShowAuthModal(true);
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontSize: '0.8rem',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: 'var(--radius-full)',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  color: '#fff',
+                  border: '1px solid var(--border)',
+                  fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                <UserIcon size={14} /> Sign In
+              </button>
+            )}
+
             <span
               style={{
                 fontSize: '0.75rem',
@@ -173,10 +227,17 @@ export function App() {
       {/* Admin Panel View */}
       {isAdminView ? (
         <AdminPanel onExit={() => setIsAdminView(false)} />
+      ) : selectedAttractionId ? (
+        <AttractionDetail
+          attractionId={selectedAttractionId}
+          onBack={() => setSelectedAttractionId(null)}
+          currentUser={currentUser}
+          onRequireLogin={() => { setAuthMode('login'); setAuthError(''); setShowAuthModal(true); }}
+        />
       ) : (
         /* Main Content Area */
         <main style={{ flex: 1, maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 1.5rem' }}>
-        
+
         {/* Hero Title */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--primary-light)', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.5rem' }}>
@@ -259,7 +320,7 @@ export function App() {
 
         {/* Destination Guide (Attractions, Stays, Hill-Tract Advisories) */}
         {destinationGuide && (
-          <DestinationGuide guide={destinationGuide} />
+          <DestinationGuide guide={destinationGuide} onSelectAttraction={(id) => setSelectedAttractionId(id)} />
         )}
       </main>
       )}
@@ -269,56 +330,92 @@ export function App() {
         GhurboBD • Mini-Rome2rio for Bangladesh • Chittagong, Cox's Bazar, Bandarban & Rangamati
       </footer>
 
-      {/* Secret Admin Authentication Modal */}
+      {/* Login / Register Modal */}
       {showAuthModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
           <div style={{ background: '#0f172a', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', width: '100%', maxWidth: '400px', padding: '1.75rem', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)' }}>
-            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1.2rem', color: '#fff', fontWeight: 700 }}>Management Authorization</h3>
-            <p style={{ margin: '0 0 1.25rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Enter your master deployment key to unlock system operations.</p>
-            
-            <form onSubmit={(e) => {
+            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1.2rem', color: '#fff', fontWeight: 700 }}>
+              {authMode === 'login' ? 'Sign In' : 'Create Account'}
+            </h3>
+            <p style={{ margin: '0 0 1.25rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              {authMode === 'login' ? 'Sign in to leave reviews and ratings.' : 'Register to start leaving reviews and ratings.'}
+            </p>
+
+            <form onSubmit={async (e) => {
               e.preventDefault();
-              if (secretInput === 'travelbd-admin-secret-2026') {
-                localStorage.setItem('travelbd_admin_token', secretInput);
-                setIsAuthenticated(true);
-                setIsAdminView(true);
+              setAuthError('');
+              setAuthBusy(true);
+              try {
+                const user = authMode === 'login'
+                  ? await authApi.login(authForm.email, authForm.password)
+                  : await authApi.register(authForm.name, authForm.email, authForm.password);
+                setCurrentUser(user);
                 setShowAuthModal(false);
-                setSecretInput('');
-                setAuthError('');
-              } else {
-                setAuthError('Invalid deployment key.');
+                setAuthForm({ name: '', email: '', password: '' });
+                if (user.role === 'Admin') setIsAdminView(true);
+              } catch (err: any) {
+                setAuthError(err.message || 'Something went wrong.');
+              } finally {
+                setAuthBusy(false);
               }
-            }}>
+            }} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {authMode === 'register' && (
+                <input
+                  placeholder="Full Name"
+                  required
+                  value={authForm.name}
+                  onChange={(e) => setAuthForm({ ...authForm, name: e.target.value })}
+                  style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.65rem 0.85rem', borderRadius: 'var(--radius-md)', color: '#fff', fontSize: '0.9rem' }}
+                />
+              )}
               <input
-                type="password"
-                placeholder="Secret Access Key"
+                type="email"
+                placeholder="Email"
                 autoFocus
                 required
-                value={secretInput}
-                onChange={(e) => setSecretInput(e.target.value)}
-                style={{ width: '100%', background: 'rgba(255,255,255,0.06)', border: authError ? '1px solid #f43f5e' : '1px solid var(--border)', padding: '0.65rem 0.85rem', borderRadius: 'var(--radius-md)', color: '#fff', fontSize: '0.9rem', marginBottom: '0.75rem' }}
+                value={authForm.email}
+                onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
+                style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.65rem 0.85rem', borderRadius: 'var(--radius-md)', color: '#fff', fontSize: '0.9rem' }}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                required
+                minLength={6}
+                value={authForm.password}
+                onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
+                style={{ background: 'rgba(255,255,255,0.06)', border: authError ? '1px solid #f43f5e' : '1px solid var(--border)', padding: '0.65rem 0.85rem', borderRadius: 'var(--radius-md)', color: '#fff', fontSize: '0.9rem' }}
               />
 
               {authError && (
-                <div style={{ color: '#f87171', fontSize: '0.8rem', marginBottom: '0.75rem' }}>
+                <div style={{ color: '#f87171', fontSize: '0.8rem' }}>
                   {authError}
                 </div>
               )}
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.6rem' }}>
+              <button
+                type="button"
+                onClick={() => { setAuthMode(authMode === 'login' ? 'register' : 'login'); setAuthError(''); }}
+                style={{ background: 'none', border: 'none', color: 'var(--primary-light)', cursor: 'pointer', fontSize: '0.8rem', textAlign: 'left', padding: 0 }}
+              >
+                {authMode === 'login' ? "Don't have an account? Register" : 'Already have an account? Sign in'}
+              </button>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.6rem', marginTop: '0.5rem' }}>
                 <button
                   type="button"
-                  onClick={() => { setShowAuthModal(false); setAuthError(''); setSecretInput(''); }}
+                  onClick={() => { setShowAuthModal(false); setAuthError(''); setAuthForm({ name: '', email: '', password: '' }); }}
                   style={{ background: 'rgba(255,255,255,0.06)', border: 'none', padding: '0.55rem 1rem', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.85rem' }}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
+                  disabled={authBusy}
                   className="btn-primary"
-                  style={{ padding: '0.55rem 1.25rem', fontSize: '0.85rem' }}
+                  style={{ padding: '0.55rem 1.25rem', fontSize: '0.85rem', opacity: authBusy ? 0.7 : 1 }}
                 >
-                  Authorize
+                  {authBusy ? 'Please wait...' : authMode === 'login' ? 'Sign In' : 'Register'}
                 </button>
               </div>
             </form>

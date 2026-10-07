@@ -64,7 +64,10 @@ export function AdminPanel({ onExit }: { onExit: () => void }) {
 
   // Selected location for guides tab
   const [selectedGuideLocation, setSelectedGuideLocation] = useState<string>('');
-  const [attractionForm, setAttractionForm] = useState({ name: '', banglaName: '', category: 'Nature', entryFeeBdt: '0', description: '', bestTimeToVisit: '' });
+  const [attractionForm, setAttractionForm] = useState({
+    name: '', banglaName: '', category: 'Nature', entryFeeBdt: '0', description: '', bestTimeToVisit: '',
+    imageUrl: '', galleryImagesText: '', latitude: '', longitude: '', distanceFromTownKm: '', travelTimeMinutes: '', howToReach: ''
+  });
   const [hotelForm, setHotelForm] = useState({ name: '', budgetLevel: 'MidRange', approxPriceRange: '', address: '', contactPhone: '', rating: '4.5' });
   const [advisoryForm, setAdvisoryForm] = useState({ category: 'Permits', title: '', content: '', isMandatory: true });
 
@@ -228,6 +231,11 @@ export function AdminPanel({ onExit }: { onExit: () => void }) {
     e.preventDefault();
     if (!selectedGuideLocation) return;
     try {
+      const galleryImages = attractionForm.galleryImagesText
+        .split('\n')
+        .map(s => s.trim())
+        .filter(Boolean);
+
       await adminApi.addAttraction({
         locationId: selectedGuideLocation,
         name: attractionForm.name,
@@ -235,10 +243,20 @@ export function AdminPanel({ onExit }: { onExit: () => void }) {
         category: attractionForm.category,
         entryFeeBdt: parseFloat(attractionForm.entryFeeBdt) || 0,
         description: attractionForm.description,
-        bestTimeToVisit: attractionForm.bestTimeToVisit || undefined
+        bestTimeToVisit: attractionForm.bestTimeToVisit || undefined,
+        imageUrl: attractionForm.imageUrl || undefined,
+        latitude: attractionForm.latitude ? parseFloat(attractionForm.latitude) : undefined,
+        longitude: attractionForm.longitude ? parseFloat(attractionForm.longitude) : undefined,
+        distanceFromTownKm: attractionForm.distanceFromTownKm ? parseFloat(attractionForm.distanceFromTownKm) : undefined,
+        travelTimeMinutes: attractionForm.travelTimeMinutes ? parseInt(attractionForm.travelTimeMinutes) : undefined,
+        howToReach: attractionForm.howToReach || undefined,
+        galleryImages
       });
       notify('Attraction added!', 'success');
-      setAttractionForm({ name: '', banglaName: '', category: 'Nature', entryFeeBdt: '0', description: '', bestTimeToVisit: '' });
+      setAttractionForm({
+        name: '', banglaName: '', category: 'Nature', entryFeeBdt: '0', description: '', bestTimeToVisit: '',
+        imageUrl: '', galleryImagesText: '', latitude: '', longitude: '', distanceFromTownKm: '', travelTimeMinutes: '', howToReach: ''
+      });
       loadData();
     } catch (err: any) {
       notify(err.message, 'error');
@@ -639,6 +657,61 @@ export function AdminPanel({ onExit }: { onExit: () => void }) {
                     rows={2}
                     value={attractionForm.description}
                     onChange={(e) => setAttractionForm({ ...attractionForm, description: e.target.value })}
+                    style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.5rem', borderRadius: '4px', color: '#fff' }}
+                  />
+                  <input
+                    placeholder="Cover Image URL"
+                    value={attractionForm.imageUrl}
+                    onChange={(e) => setAttractionForm({ ...attractionForm, imageUrl: e.target.value })}
+                    style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.5rem', borderRadius: '4px', color: '#fff' }}
+                  />
+                  <textarea
+                    placeholder="Gallery image URLs (one per line)"
+                    rows={2}
+                    value={attractionForm.galleryImagesText}
+                    onChange={(e) => setAttractionForm({ ...attractionForm, galleryImagesText: e.target.value })}
+                    style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.5rem', borderRadius: '4px', color: '#fff' }}
+                  />
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <input
+                      placeholder="Latitude"
+                      type="number"
+                      step="any"
+                      value={attractionForm.latitude}
+                      onChange={(e) => setAttractionForm({ ...attractionForm, latitude: e.target.value })}
+                      style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.5rem', borderRadius: '4px', color: '#fff' }}
+                    />
+                    <input
+                      placeholder="Longitude"
+                      type="number"
+                      step="any"
+                      value={attractionForm.longitude}
+                      onChange={(e) => setAttractionForm({ ...attractionForm, longitude: e.target.value })}
+                      style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.5rem', borderRadius: '4px', color: '#fff' }}
+                    />
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <input
+                      placeholder="Distance from town (km)"
+                      type="number"
+                      step="any"
+                      value={attractionForm.distanceFromTownKm}
+                      onChange={(e) => setAttractionForm({ ...attractionForm, distanceFromTownKm: e.target.value })}
+                      style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.5rem', borderRadius: '4px', color: '#fff' }}
+                    />
+                    <input
+                      placeholder="Travel time (minutes)"
+                      type="number"
+                      value={attractionForm.travelTimeMinutes}
+                      onChange={(e) => setAttractionForm({ ...attractionForm, travelTimeMinutes: e.target.value })}
+                      style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.5rem', borderRadius: '4px', color: '#fff' }}
+                    />
+                  </div>
+                  <textarea
+                    placeholder="How to reach (route, transport, permits)..."
+                    rows={2}
+                    value={attractionForm.howToReach}
+                    onChange={(e) => setAttractionForm({ ...attractionForm, howToReach: e.target.value })}
                     style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.5rem', borderRadius: '4px', color: '#fff' }}
                   />
                   <button type="submit" className="btn-primary" style={{ padding: '0.5rem' }}>Save Attraction</button>

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using TravelBD.Application.DTOs;
 using TravelBD.Application.Interfaces;
@@ -64,7 +65,7 @@ public class LocationRepository : ILocationRepository
         string slugOrId, CancellationToken cancellationToken = default)
     {
         var query = _context.Locations
-            .Include(l => l.Attractions)
+            .Include(l => l.Attractions).ThenInclude(a => a.Feedbacks)
             .Include(l => l.Accommodations)
             .Include(l => l.Advisories)
             .AsNoTracking();
@@ -77,10 +78,7 @@ public class LocationRepository : ILocationRepository
 
         return new DestinationDetailDto(
             MapToDto(location),
-            location.Attractions.Select(a => new AttractionDto(
-                a.Id, a.Name, a.BanglaName, a.Description,
-                a.BestTimeToVisit, a.EntryFeeBdt, a.ImageUrl, a.Category
-            )).ToList(),
+            location.Attractions.Select(MapAttraction).ToList(),
             location.Accommodations.Select(ac => new AccommodationDto(
                 ac.Id, ac.Name, ac.BudgetLevel.ToString(), ac.ApproxPriceRange,
                 ac.Address, ac.ContactPhone, ac.BookingUrl, ac.Rating, ac.HighlightFeature
@@ -89,6 +87,31 @@ public class LocationRepository : ILocationRepository
                 ad.Id, ad.Category, ad.Title, ad.Content, ad.IsMandatory
             )).ToList()
         );
+    }
+
+    public async Task<Attraction?> GetAttractionDetailAsync(Guid attractionId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Attractions
+            .Include(a => a.Location)
+            .Include(a => a.Feedbacks).ThenInclude(f => f.User)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => a.Id == attractionId, cancellationToken);
+    }
+
+    private static AttractionDto MapAttraction(Attraction a) => new(
+        a.Id, a.Name, a.BanglaName, a.Description, a.BestTimeToVisit,
+        a.EntryFeeBdt, a.ImageUrl, a.Category,
+        a.Latitude, a.Longitude, a.DistanceFromTownKm, a.TravelTimeMinutes, a.HowToReach,
+        DeserializeGallery(a.GalleryImagesJson),
+        a.Feedbacks.Count == 0 ? 0 : Math.Round(a.Feedbacks.Average(f => f.Rating), 1),
+        a.Feedbacks.Count
+    );
+
+    private static List<string> DeserializeGallery(string? json)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return new List<string>();
+        try { return JsonSerializer.Deserialize<List<string>>(json) ?? new List<string>(); }
+        catch { return new List<string>(); }
     }
 
     private static LocationDto MapToDto(Location l) => new(

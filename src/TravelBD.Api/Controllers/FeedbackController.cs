@@ -18,9 +18,9 @@ public class FeedbackController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] Guid? locationId, CancellationToken ct)
+    public async Task<IActionResult> GetAll([FromQuery] Guid? locationId, [FromQuery] Guid? attractionId, CancellationToken ct)
     {
-        var feedbacks = await _manager.GetAllAsync(locationId, ct);
+        var feedbacks = await _manager.GetAllAsync(locationId, attractionId, ct);
         return Ok(feedbacks);
     }
 

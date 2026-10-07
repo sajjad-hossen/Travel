@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using TravelBD.Application.DTOs;
 using TravelBD.Application.Interfaces;
@@ -104,7 +105,13 @@ public class AdminLocationManager : IAdminLocationManager
             BestTimeToVisit = request.BestTimeToVisit?.Trim(),
             EntryFeeBdt = Math.Max(0, request.EntryFeeBdt),
             ImageUrl = request.ImageUrl?.Trim(),
-            Category = request.Category?.Trim()
+            Category = request.Category?.Trim(),
+            Latitude = request.Latitude,
+            Longitude = request.Longitude,
+            DistanceFromTownKm = request.DistanceFromTownKm,
+            TravelTimeMinutes = request.TravelTimeMinutes,
+            HowToReach = request.HowToReach?.Trim(),
+            GalleryImagesJson = SerializeGallery(request.GalleryImages)
         };
 
         var created = await _repository.AddAttractionAsync(attraction, cancellationToken);
@@ -123,6 +130,12 @@ public class AdminLocationManager : IAdminLocationManager
         existing.EntryFeeBdt = Math.Max(0, request.EntryFeeBdt);
         existing.ImageUrl = request.ImageUrl?.Trim();
         existing.Category = request.Category?.Trim();
+        existing.Latitude = request.Latitude;
+        existing.Longitude = request.Longitude;
+        existing.DistanceFromTownKm = request.DistanceFromTownKm;
+        existing.TravelTimeMinutes = request.TravelTimeMinutes;
+        existing.HowToReach = request.HowToReach?.Trim();
+        existing.GalleryImagesJson = SerializeGallery(request.GalleryImages);
 
         await _repository.UpdateAttractionAsync(existing, cancellationToken);
         return MapAttraction(existing);
@@ -220,9 +233,22 @@ public class AdminLocationManager : IAdminLocationManager
         l.IsMajorHub, l.IsTouristDestination, l.Description, l.HeroImageUrl
     );
 
+    private static string? SerializeGallery(List<string>? gallery) =>
+        gallery == null || gallery.Count == 0 ? null : JsonSerializer.Serialize(gallery);
+
+    private static List<string> DeserializeGallery(string? json)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return new List<string>();
+        try { return JsonSerializer.Deserialize<List<string>>(json) ?? new List<string>(); }
+        catch { return new List<string>(); }
+    }
+
     private static AttractionDto MapAttraction(Attraction a) => new(
         a.Id, a.Name, a.BanglaName, a.Description, a.BestTimeToVisit,
-        a.EntryFeeBdt, a.ImageUrl, a.Category
+        a.EntryFeeBdt, a.ImageUrl, a.Category,
+        a.Latitude, a.Longitude, a.DistanceFromTownKm, a.TravelTimeMinutes, a.HowToReach,
+        DeserializeGallery(a.GalleryImagesJson),
+        0, 0
     );
 
     private static AccommodationDto MapAccommodation(Accommodation ac) => new(

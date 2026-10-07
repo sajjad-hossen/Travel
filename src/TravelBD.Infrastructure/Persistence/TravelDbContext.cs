@@ -105,6 +105,11 @@ public class TravelDbContext : DbContext
                 .WithMany(l => l.Feedbacks)
                 .HasForeignKey(e => e.LocationId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(e => e.Attraction)
+                .WithMany(a => a.Feedbacks)
+                .HasForeignKey(e => e.AttractionId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
     }
 }

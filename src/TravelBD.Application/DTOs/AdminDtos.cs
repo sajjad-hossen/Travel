@@ -42,7 +42,13 @@ public record CreateAttractionRequest(
     string? BestTimeToVisit,
     decimal EntryFeeBdt,
     string? ImageUrl,
-    string? Category
+    string? Category,
+    double? Latitude,
+    double? Longitude,
+    double? DistanceFromTownKm,
+    int? TravelTimeMinutes,
+    string? HowToReach,
+    List<string>? GalleryImages
 );
 
 public record UpdateAttractionRequest(
@@ -52,7 +58,13 @@ public record UpdateAttractionRequest(
     string? BestTimeToVisit,
     decimal EntryFeeBdt,
     string? ImageUrl,
-    string? Category
+    string? Category,
+    double? Latitude,
+    double? Longitude,
+    double? DistanceFromTownKm,
+    int? TravelTimeMinutes,
+    string? HowToReach,
+    List<string>? GalleryImages
 );
 
 // ── Accommodations ────────────────────────────────────────────────────────────

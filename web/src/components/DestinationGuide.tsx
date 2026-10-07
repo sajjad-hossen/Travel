@@ -4,9 +4,10 @@ import { ShieldAlert, Compass, Bed, AlertCircle, Phone, Star, MapPin, Info } fro
 
 interface DestinationGuideProps {
   guide: DestinationDetailDto;
+  onSelectAttraction?: (id: string) => void;
 }
 
-export const DestinationGuide: FC<DestinationGuideProps> = ({ guide }) => {
+export const DestinationGuide: FC<DestinationGuideProps> = ({ guide, onSelectAttraction }) => {
   const [activeTab, setActiveTab] = useState<'tips' | 'attractions' | 'stays'>('tips');
 
   const { location, attractions, accommodations, advisories } = guide;
@@ -168,7 +169,8 @@ export const DestinationGuide: FC<DestinationGuideProps> = ({ guide }) => {
             <div
               key={spot.id}
               className="glass-panel"
-              style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+              onClick={() => onSelectAttraction?.(spot.id)}
+              style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column', cursor: onSelectAttraction ? 'pointer' : 'default' }}
             >
               <div
                 style={{
@@ -206,6 +208,13 @@ export const DestinationGuide: FC<DestinationGuideProps> = ({ guide }) => {
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem', flex: 1, lineHeight: 1.5 }}>
                   {spot.description}
                 </p>
+                {spot.reviewCount > 0 && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', marginTop: '0.5rem' }}>
+                    <Star size={14} color="#f59e0b" fill="#f59e0b" />
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#f59e0b' }}>{spot.averageRating}</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>({spot.reviewCount} reviews)</span>
+                  </div>
+                )}
                 {spot.bestTimeToVisit && (
                   <div style={{ fontSize: '0.78rem', color: 'var(--accent-amber)', marginTop: '0.75rem', fontWeight: 500 }}>
                     Best Time: {spot.bestTimeToVisit}

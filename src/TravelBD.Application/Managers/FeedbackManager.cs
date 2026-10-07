@@ -15,9 +15,9 @@ public class FeedbackManager : IFeedbackManager
         _users = users;
     }
 
-    public async Task<List<FeedbackDto>> GetAllAsync(Guid? locationId, CancellationToken ct)
+    public async Task<List<FeedbackDto>> GetAllAsync(Guid? locationId, Guid? attractionId, CancellationToken ct)
     {
-        var feedbacks = await _feedbacks.GetAllAsync(locationId, ct);
+        var feedbacks = await _feedbacks.GetAllAsync(locationId, attractionId, ct);
         return feedbacks.Select(ToDto).ToList();
     }
 
@@ -33,6 +33,7 @@ public class FeedbackManager : IFeedbackManager
         {
             UserId = userId,
             LocationId = request.LocationId,
+            AttractionId = request.AttractionId,
             Rating = request.Rating,
             Comment = request.Comment.Trim()
         };
@@ -50,6 +51,8 @@ public class FeedbackManager : IFeedbackManager
         f.User?.Name ?? string.Empty,
         f.LocationId,
         f.Location?.Name,
+        f.AttractionId,
+        f.Attraction?.Name,
         f.Rating,
         f.Comment,
         f.CreatedAt

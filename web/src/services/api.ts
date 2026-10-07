@@ -5,10 +5,115 @@ import type {
   TransportOptionDto,
   AttractionDto,
   AccommodationDto,
-  AdvisoryDto
+  AdvisoryDto,
+  AttractionDetailDto,
+  FeedbackDto,
+  AuthUser
 } from '../types/travel';
 
 const API_BASE = 'http://localhost:5000/api/v1';
+
+const USER_TOKEN_KEY = 'travelbd_user_token';
+const USER_INFO_KEY = 'travelbd_user_info';
+
+export const authStore = {
+  getToken(): string | null {
+    return localStorage.getItem(USER_TOKEN_KEY);
+  },
+  getUser(): AuthUser | null {
+    const raw = localStorage.getItem(USER_INFO_KEY);
+    return raw ? JSON.parse(raw) : null;
+  },
+  save(token: string, user: AuthUser) {
+    localStorage.setItem(USER_TOKEN_KEY, token);
+    localStorage.setItem(USER_INFO_KEY, JSON.stringify(user));
+  },
+  clear() {
+    localStorage.removeItem(USER_TOKEN_KEY);
+    localStorage.removeItem(USER_INFO_KEY);
+  },
+  isAdmin(): boolean {
+    return this.getUser()?.role === 'Admin';
+  }
+};
+
+const getAuthHeaders = (): Record<string, string> => {
+  const token = authStore.getToken();
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
+  };
+};
+
+export const authApi = {
+  async register(name: string, email: string, password: string): Promise<AuthUser> {
+    const res = await fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || 'Registration failed');
+    }
+    const data = await res.json();
+    const user: AuthUser = { userId: data.userId, name: data.name, email: data.email, role: data.role };
+    authStore.save(data.token, user);
+    return user;
+  },
+
+  async login(email: string, password: string): Promise<AuthUser> {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || 'Login failed');
+    }
+    const data = await res.json();
+    const user: AuthUser = { userId: data.userId, name: data.name, email: data.email, role: data.role };
+    authStore.save(data.token, user);
+    return user;
+  },
+
+  logout() {
+    authStore.clear();
+  }
+};
+
+export const attractionApi = {
+  async getById(id: string): Promise<AttractionDetailDto> {
+    const res = await fetch(`${API_BASE}/attractions/${id}`);
+    if (!res.ok) throw new Error('Failed to load attraction details');
+    return res.json();
+  }
+};
+
+export const feedbackApi = {
+  async list(params: { locationId?: string; attractionId?: string }): Promise<FeedbackDto[]> {
+    const qs = new URLSearchParams();
+    if (params.locationId) qs.set('locationId', params.locationId);
+    if (params.attractionId) qs.set('attractionId', params.attractionId);
+    const res = await fetch(`${API_BASE}/feedback?${qs.toString()}`);
+    if (!res.ok) throw new Error('Failed to load reviews');
+    return res.json();
+  },
+
+  async create(data: { locationId?: string; attractionId?: string; rating: number; comment: string }): Promise<FeedbackDto> {
+    const res = await fetch(`${API_BASE}/feedback`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || 'Failed to submit review');
+    }
+    return res.json();
+  }
+};
 
 export interface AdminRouteSegmentDto {
   id: string;
@@ -54,13 +159,7 @@ export const travelApi = {
   }
 };
 
-const getAdminHeaders = () => {
-  const token = localStorage.getItem('travelbd_admin_token') || 'travelbd-admin-secret-2026';
-  return {
-    'Content-Type': 'application/json',
-    'X-Admin-Api-Key': token
-  };
-};
+const getAdminHeaders = () => getAuthHeaders();
 
 export const adminApi = {
   // ── Locations ───────────────────────────────────────────────────────────────

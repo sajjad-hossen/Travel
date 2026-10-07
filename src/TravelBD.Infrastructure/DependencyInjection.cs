@@ -44,6 +44,7 @@ public static class DependencyInjection
         services.AddScoped<IAdminRouteManager, AdminRouteManager>();
         services.AddScoped<IAuthManager, AuthManager>();
         services.AddScoped<IFeedbackManager, FeedbackManager>();
+        services.AddScoped<IAttractionManager, AttractionManager>();
 
         // ── Security ──────────────────────────────────────────────────────────
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
