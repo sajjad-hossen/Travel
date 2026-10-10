@@ -22,7 +22,16 @@ export const authStore = {
   },
   getUser(): AuthUser | null {
     const raw = localStorage.getItem(USER_INFO_KEY);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        parsed.role = (parsed.role === 1 || parsed.role === 'Admin') ? 'Admin' : 'Customer';
+      }
+      return parsed;
+    } catch {
+      return null;
+    }
   },
   save(token: string, user: AuthUser) {
     localStorage.setItem(USER_TOKEN_KEY, token);
@@ -57,7 +66,8 @@ export const authApi = {
       throw new Error(err.message || 'Registration failed');
     }
     const data = await res.json();
-    const user: AuthUser = { userId: data.userId, name: data.name, email: data.email, role: data.role };
+    const role: 'Admin' | 'Customer' = (data.role === 1 || data.role === 'Admin') ? 'Admin' : 'Customer';
+    const user: AuthUser = { userId: data.userId, name: data.name, email: data.email, role };
     authStore.save(data.token, user);
     return user;
   },
@@ -73,7 +83,8 @@ export const authApi = {
       throw new Error(err.message || 'Login failed');
     }
     const data = await res.json();
-    const user: AuthUser = { userId: data.userId, name: data.name, email: data.email, role: data.role };
+    const role: 'Admin' | 'Customer' = (data.role === 1 || data.role === 'Admin') ? 'Admin' : 'Customer';
+    const user: AuthUser = { userId: data.userId, name: data.name, email: data.email, role };
     authStore.save(data.token, user);
     return user;
   },

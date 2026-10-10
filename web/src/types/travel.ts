@@ -127,6 +127,7 @@ export interface AccommodationDto {
   bookingUrl?: string;
   rating: number;
   highlightFeature?: string;
+  imageUrl?: string;
 }
 
 export interface AdvisoryDto {

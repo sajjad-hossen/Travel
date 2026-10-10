@@ -157,7 +157,8 @@ public class AdminLocationManager : IAdminLocationManager
             ContactPhone = request.ContactPhone?.Trim(),
             BookingUrl = request.BookingUrl?.Trim(),
             Rating = Math.Clamp(request.Rating, 1.0, 5.0),
-            HighlightFeature = request.HighlightFeature?.Trim()
+            HighlightFeature = request.HighlightFeature?.Trim(),
+            ImageUrl = request.ImageUrl?.Trim()
         };
 
         var created = await _repository.AddAccommodationAsync(accommodation, cancellationToken);
@@ -177,6 +178,7 @@ public class AdminLocationManager : IAdminLocationManager
         existing.BookingUrl = request.BookingUrl?.Trim();
         existing.Rating = Math.Clamp(request.Rating, 1.0, 5.0);
         existing.HighlightFeature = request.HighlightFeature?.Trim();
+        existing.ImageUrl = request.ImageUrl?.Trim();
 
         await _repository.UpdateAccommodationAsync(existing, cancellationToken);
         return MapAccommodation(existing);
@@ -253,7 +255,7 @@ public class AdminLocationManager : IAdminLocationManager
 
     private static AccommodationDto MapAccommodation(Accommodation ac) => new(
         ac.Id, ac.Name, ac.BudgetLevel.ToString(), ac.ApproxPriceRange,
-        ac.Address, ac.ContactPhone, ac.BookingUrl, ac.Rating, ac.HighlightFeature
+        ac.Address, ac.ContactPhone, ac.BookingUrl, ac.Rating, ac.HighlightFeature, ac.ImageUrl
     );
 
     private static AdvisoryDto MapAdvisory(DestinationAdvisory ad) => new(

@@ -76,7 +76,7 @@ export const SearchBar: FC<SearchBarProps> = ({
             <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
               From (Origin)
             </label>
-            <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(15,23,42,0.6)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.6rem 0.8rem', marginTop: '0.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', background: 'var(--bg-input)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.6rem 0.8rem', marginTop: '0.25rem', boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.06)' }}>
               <MapPin size={18} color="var(--primary-light)" style={{ marginRight: '0.5rem', flexShrink: 0 }} />
               <input
                 type="text"
@@ -94,7 +94,7 @@ export const SearchBar: FC<SearchBarProps> = ({
                   background: 'transparent',
                   border: 'none',
                   outline: 'none',
-                  color: '#fff',
+                  color: 'var(--text-main)',
                   width: '100%',
                   fontSize: '0.95rem',
                   fontWeight: 500
@@ -115,7 +115,7 @@ export const SearchBar: FC<SearchBarProps> = ({
                   maxHeight: '220px',
                   overflowY: 'auto',
                   padding: '0.4rem',
-                  background: '#0f172a'
+                  background: 'var(--dropdown-bg)'
                 }}
               >
                 {fromSuggestions.map((loc) => (
@@ -133,9 +133,10 @@ export const SearchBar: FC<SearchBarProps> = ({
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
+                      color: 'var(--text-main)',
                       transition: 'background 0.15s'
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(5, 150, 105, 0.12)')}
                     onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                   >
                     <span>
@@ -154,7 +155,7 @@ export const SearchBar: FC<SearchBarProps> = ({
             onClick={handleSwap}
             title="Swap Origin and Destination"
             style={{
-              background: 'rgba(255,255,255,0.06)',
+              background: 'var(--bg-chip)',
               border: '1px solid var(--border)',
               borderRadius: '50%',
               width: '40px',
@@ -169,7 +170,7 @@ export const SearchBar: FC<SearchBarProps> = ({
               transition: 'all 0.2s'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#fff';
+              e.currentTarget.style.color = 'var(--primary-light)';
               e.currentTarget.style.borderColor = 'var(--primary)';
               e.currentTarget.style.transform = 'rotate(180deg)';
             }}
@@ -187,7 +188,7 @@ export const SearchBar: FC<SearchBarProps> = ({
             <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
               To (Destination Hub)
             </label>
-            <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(15,23,42,0.6)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.6rem 0.8rem', marginTop: '0.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', background: 'var(--bg-input)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.6rem 0.8rem', marginTop: '0.25rem', boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.06)' }}>
               <MapPin size={18} color="var(--accent-amber)" style={{ marginRight: '0.5rem', flexShrink: 0 }} />
               <input
                 type="text"
@@ -205,7 +206,7 @@ export const SearchBar: FC<SearchBarProps> = ({
                   background: 'transparent',
                   border: 'none',
                   outline: 'none',
-                  color: '#fff',
+                  color: 'var(--text-main)',
                   width: '100%',
                   fontSize: '0.95rem',
                   fontWeight: 500
@@ -226,7 +227,7 @@ export const SearchBar: FC<SearchBarProps> = ({
                   maxHeight: '220px',
                   overflowY: 'auto',
                   padding: '0.4rem',
-                  background: '#0f172a'
+                  background: 'var(--dropdown-bg)'
                 }}
               >
                 {toSuggestions.map((loc) => (
@@ -243,9 +244,10 @@ export const SearchBar: FC<SearchBarProps> = ({
                       fontSize: '0.9rem',
                       display: 'flex',
                       justifyContent: 'space-between',
-                      alignItems: 'center'
+                      alignItems: 'center',
+                      color: 'var(--text-main)'
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(5, 150, 105, 0.12)')}
                     onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                   >
                     <span>
@@ -300,7 +302,7 @@ export const SearchBar: FC<SearchBarProps> = ({
                 if (fromQuery && toQuery) onSearch(fromQuery, toQuery, pref);
               }}
               style={{
-                background: preference === pref ? 'rgba(16,185,129,0.18)' : 'rgba(255,255,255,0.04)',
+                background: preference === pref ? 'rgba(16,185,129,0.18)' : 'var(--border)',
                 color: preference === pref ? 'var(--primary-light)' : 'var(--text-muted)',
                 border: `1px solid ${preference === pref ? 'var(--primary)' : 'var(--border)'}`,
                 borderRadius: 'var(--radius-full)',

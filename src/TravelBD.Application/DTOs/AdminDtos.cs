@@ -77,7 +77,8 @@ public record CreateAccommodationRequest(
     string? ContactPhone,
     string? BookingUrl,
     double Rating,
-    string? HighlightFeature
+    string? HighlightFeature,
+    string? ImageUrl
 );
 
 public record UpdateAccommodationRequest(
@@ -88,7 +89,8 @@ public record UpdateAccommodationRequest(
     string? ContactPhone,
     string? BookingUrl,
     double Rating,
-    string? HighlightFeature
+    string? HighlightFeature,
+    string? ImageUrl
 );
 
 // ── Advisories ────────────────────────────────────────────────────────────────

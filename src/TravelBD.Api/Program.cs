@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using TravelBD.Infrastructure;
 using TravelBD.Infrastructure.Persistence;
@@ -11,6 +12,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
     });
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
@@ -54,6 +56,19 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TravelDbContext>();
     await db.Database.EnsureCreatedAsync();
+
+    // Ensure newly added columns exist in existing PostgreSQL schema
+    try
+    {
+        await db.Database.ExecuteSqlRawAsync(
+            "ALTER TABLE \"Accommodations\" ADD COLUMN IF NOT EXISTS \"ImageUrl\" text;"
+        );
+    }
+    catch
+    {
+        // Ignore if column already exists or table doesn't exist yet
+    }
+
     await DbSeeder.SeedAsync(db);
 }
 

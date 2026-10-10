@@ -117,7 +117,7 @@ export const RouteView: FC<RouteViewProps> = ({ plans, originName, destinationNa
               <div
                 key={step.stepNumber}
                 style={{
-                  background: 'rgba(15, 23, 42, 0.45)',
+                  background: 'var(--bg-card)',
                   border: '1px solid var(--border)',
                   borderRadius: 'var(--radius-md)',
                   padding: '1.25rem'
@@ -131,7 +131,7 @@ export const RouteView: FC<RouteViewProps> = ({ plans, originName, destinationNa
                         width: '36px',
                         height: '36px',
                         borderRadius: '50%',
-                        background: 'rgba(255,255,255,0.06)',
+                        background: 'var(--bg-chip)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -143,7 +143,7 @@ export const RouteView: FC<RouteViewProps> = ({ plans, originName, destinationNa
                       <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 600 }}>
                         Leg {step.stepNumber} ({step.distanceKm} km)
                       </div>
-                      <div style={{ fontSize: '1.05rem', fontWeight: 600 }}>
+                      <div style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-heading)' }}>
                         {step.originName} <span style={{ color: 'var(--text-muted)' }}>→</span> {step.destinationName}
                       </div>
                     </div>
@@ -151,7 +151,7 @@ export const RouteView: FC<RouteViewProps> = ({ plans, originName, destinationNa
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>~{formatHours(step.avgDurationMinutes)}</div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-heading)' }}>~{formatHours(step.avgDurationMinutes)}</div>
                       <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                         {step.transportOptions.length} transport {step.transportOptions.length === 1 ? 'option' : 'options'}
                       </div>
@@ -159,9 +159,9 @@ export const RouteView: FC<RouteViewProps> = ({ plans, originName, destinationNa
                     <button
                       onClick={() => setExpandedLegIndex(isExpanded ? null : sIdx)}
                       style={{
-                        background: 'transparent',
+                        background: 'var(--bg-chip)',
                         border: '1px solid var(--border)',
-                        color: 'var(--text-muted)',
+                        color: 'var(--text-main)',
                         borderRadius: 'var(--radius-sm)',
                         padding: '0.4rem 0.6rem',
                         cursor: 'pointer',
@@ -184,7 +184,8 @@ export const RouteView: FC<RouteViewProps> = ({ plans, originName, destinationNa
                       <div
                         key={opt.id}
                         style={{
-                          background: 'rgba(30, 41, 59, 0.5)',
+                          background: 'var(--bg-subtle)',
+                          border: '1px solid var(--border)',
                           borderRadius: 'var(--radius-sm)',
                           padding: '0.85rem 1rem',
                           display: 'flex',
@@ -196,14 +197,14 @@ export const RouteView: FC<RouteViewProps> = ({ plans, originName, destinationNa
                       >
                         <div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ fontWeight: 600, color: '#fff' }}>{opt.operatorName}</span>
+                            <span style={{ fontWeight: 600, color: 'var(--text-heading)' }}>{opt.operatorName}</span>
                             <span
                               style={{
                                 fontSize: '0.7rem',
                                 padding: '0.1rem 0.4rem',
                                 borderRadius: '4px',
-                                background: 'rgba(56, 189, 248, 0.15)',
-                                color: '#38bdf8'
+                                background: 'var(--badge-bg)',
+                                color: 'var(--badge-text)'
                               }}
                             >
                               {opt.tier}

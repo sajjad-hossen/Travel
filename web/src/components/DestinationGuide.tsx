@@ -1,6 +1,6 @@
 import { useState, type FC } from 'react';
 import type { DestinationDetailDto } from '../types/travel';
-import { ShieldAlert, Compass, Bed, AlertCircle, Phone, Star, MapPin, Info } from 'lucide-react';
+import { ShieldAlert, Compass, Bed, AlertCircle, Phone, Star, MapPin, Info, ExternalLink } from 'lucide-react';
 
 interface DestinationGuideProps {
   guide: DestinationDetailDto;
@@ -153,7 +153,7 @@ export const DestinationGuide: FC<DestinationGuideProps> = ({ guide, onSelectAtt
                   {adv.category} {adv.isMandatory && '• MANDATORY'}
                 </span>
               </div>
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff' }}>{adv.title}</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-heading)' }}>{adv.title}</h4>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginTop: '0.4rem', lineHeight: 1.5 }}>
                 {adv.content}
               </p>
@@ -201,7 +201,7 @@ export const DestinationGuide: FC<DestinationGuideProps> = ({ guide, onSelectAtt
                 )}
               </div>
               <div style={{ padding: '1.2rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff' }}>{spot.name}</h4>
+                <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-heading)' }}>{spot.name}</h4>
                 {spot.banglaName && (
                   <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{spot.banglaName}</div>
                 )}
@@ -230,38 +230,140 @@ export const DestinationGuide: FC<DestinationGuideProps> = ({ guide, onSelectAtt
       {activeTab === 'stays' && (
         <div style={{ marginTop: '1.25rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.25rem' }}>
           {accommodations.map((stay) => (
-            <div key={stay.id} className="glass-panel" style={{ padding: '1.25rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff' }}>{stay.name}</h4>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.2rem' }}>
-                    <Star size={14} color="#f59e0b" fill="#f59e0b" />
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#f59e0b' }}>{stay.rating}</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>• {stay.budgetLevel}</span>
-                  </div>
+            <div key={stay.id} className="glass-panel" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              {stay.imageUrl ? (
+                <div
+                  style={{
+                    height: '170px',
+                    width: '100%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: '#0f172a'
+                  }}
+                >
+                  <img
+                    src={stay.imageUrl}
+                    alt={stay.name}
+                    referrerPolicy="no-referrer"
+                    crossOrigin="anonymous"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                    onError={(e) => {
+                      // Fallback if image still fails to load
+                      const target = e.currentTarget;
+                      target.style.display = 'none';
+                      if (target.parentElement) {
+                        target.parentElement.innerHTML = `
+                          <div style="height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(30, 41, 59, 0.9);">
+                            <span style="font-size: 0.8rem; color: #94a3b8;">🏨 ${stay.name}</span>
+                          </div>
+                        `;
+                      }
+                    }}
+                  />
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: '10px',
+                      left: '10px',
+                      background: 'rgba(15, 23, 42, 0.85)',
+                      backdropFilter: 'blur(8px)',
+                      color: '#fff',
+                      fontSize: '0.7rem',
+                      fontWeight: 600,
+                      padding: '0.2rem 0.5rem',
+                      borderRadius: '4px',
+                      zIndex: 2
+                    }}
+                  >
+                    {stay.budgetLevel}
+                  </span>
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--primary-light)' }}>
-                    {stay.approxPriceRange}
-                  </div>
-                </div>
-              </div>
-
-              {stay.highlightFeature && (
-                <div style={{ fontSize: '0.82rem', color: '#93c5fd', marginTop: '0.6rem', background: 'rgba(59, 130, 246, 0.1)', padding: '0.4rem 0.6rem', borderRadius: '4px' }}>
-                  ✨ {stay.highlightFeature}
+              ) : (
+                <div
+                  style={{
+                    height: '110px',
+                    background: 'var(--bg-subtle)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                    borderBottom: '1px solid var(--border)'
+                  }}
+                >
+                  <Bed size={32} color="var(--primary-light)" style={{ opacity: 0.6 }} />
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: '10px',
+                      left: '10px',
+                      background: 'rgba(15, 23, 42, 0.85)',
+                      backdropFilter: 'blur(8px)',
+                      color: '#fff',
+                      fontSize: '0.7rem',
+                      fontWeight: 600,
+                      padding: '0.2rem 0.5rem',
+                      borderRadius: '4px'
+                    }}
+                  >
+                    {stay.budgetLevel}
+                  </span>
                 </div>
               )}
 
-              <div style={{ marginTop: '0.8rem', fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <MapPin size={14} /> {stay.address}
-              </div>
-
-              {stay.contactPhone && (
-                <div style={{ marginTop: '0.4rem', fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <Phone size={14} /> {stay.contactPhone}
+              <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
+                  <div>
+                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-heading)', margin: 0 }}>{stay.name}</h4>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.25rem' }}>
+                      <Star size={14} color="#f59e0b" fill="#f59e0b" />
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#f59e0b' }}>{stay.rating}</span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>• {stay.budgetLevel}</span>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--primary-light)' }}>
+                      {stay.approxPriceRange}
+                    </div>
+                  </div>
                 </div>
-              )}
+
+                {stay.highlightFeature && (
+                  <div style={{ fontSize: '0.82rem', color: '#93c5fd', marginTop: '0.75rem', background: 'rgba(59, 130, 246, 0.1)', padding: '0.4rem 0.6rem', borderRadius: '4px' }}>
+                    ✨ {stay.highlightFeature}
+                  </div>
+                )}
+
+                {stay.address && (
+                  <div style={{ marginTop: '0.75rem', fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <MapPin size={14} /> {stay.address}
+                  </div>
+                )}
+
+                {stay.contactPhone && (
+                  <div style={{ marginTop: '0.4rem', fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Phone size={14} /> {stay.contactPhone}
+                  </div>
+                )}
+
+                {stay.bookingUrl && (
+                  <div style={{ marginTop: '1rem', paddingTop: '0.85rem', borderTop: '1px solid var(--border)' }}>
+                    <a
+                      href={stay.bookingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-book-stay"
+                    >
+                      <span>Book or View Hotel</span>
+                      <ExternalLink size={15} style={{ opacity: 0.9 }} />
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>

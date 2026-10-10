@@ -129,7 +129,7 @@ export const AttractionDetail: FC<AttractionDetailProps> = ({ attractionId, onBa
       {/* Title + rating */}
       <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.75rem' }}>
         <div>
-          <h1 style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', margin: 0 }}>{data.name}</h1>
+          <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-heading)', margin: 0 }}>{data.name}</h1>
           {data.banglaName && <div style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>{data.banglaName}</div>}
           {data.category && (
             <span style={{ display: 'inline-block', marginTop: '0.5rem', fontSize: '0.75rem', background: 'rgba(16,185,129,0.15)', color: 'var(--primary-light)', padding: '0.2rem 0.6rem', borderRadius: 'var(--radius-full)', fontWeight: 600 }}>
@@ -159,7 +159,7 @@ export const AttractionDetail: FC<AttractionDetailProps> = ({ attractionId, onBa
             <MapPin size={22} color="var(--primary-light)" />
             <div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Distance from {data.locationName}</div>
-              <div style={{ fontWeight: 700, color: '#fff' }}>{data.distanceFromTownKm} km</div>
+              <div style={{ fontWeight: 700, color: 'var(--text-heading)' }}>{data.distanceFromTownKm} km</div>
             </div>
           </div>
         )}
@@ -168,7 +168,7 @@ export const AttractionDetail: FC<AttractionDetailProps> = ({ attractionId, onBa
             <Clock size={22} color="var(--primary-light)" />
             <div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Travel Time</div>
-              <div style={{ fontWeight: 700, color: '#fff' }}>
+              <div style={{ fontWeight: 700, color: 'var(--text-heading)' }}>
                 {Math.floor(data.travelTimeMinutes / 60) > 0 ? `${Math.floor(data.travelTimeMinutes / 60)}h ` : ''}{data.travelTimeMinutes % 60}m
               </div>
             </div>
@@ -179,7 +179,7 @@ export const AttractionDetail: FC<AttractionDetailProps> = ({ attractionId, onBa
             <Ticket size={22} color="var(--primary-light)" />
             <div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Entry Fee</div>
-              <div style={{ fontWeight: 700, color: '#fff' }}>৳{data.entryFeeBdt}</div>
+              <div style={{ fontWeight: 700, color: 'var(--text-heading)' }}>৳{data.entryFeeBdt}</div>
             </div>
           </div>
         )}
@@ -198,7 +198,7 @@ export const AttractionDetail: FC<AttractionDetailProps> = ({ attractionId, onBa
       {/* Map */}
       {data.latitude != null && data.longitude != null && (
         <div style={{ marginTop: '1.5rem' }}>
-          <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.6rem' }}>Location Map</h3>
+          <h3 style={{ color: 'var(--text-heading)', fontSize: '1.05rem', marginBottom: '0.6rem' }}>Location Map</h3>
           <AttractionMap
             attractionLat={data.latitude}
             attractionLng={data.longitude}
@@ -212,7 +212,7 @@ export const AttractionDetail: FC<AttractionDetailProps> = ({ attractionId, onBa
 
       {/* Reviews */}
       <div style={{ marginTop: '2.5rem' }}>
-        <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '1rem' }}>Reviews ({data.reviewCount})</h3>
+        <h3 style={{ color: 'var(--text-heading)', fontSize: '1.2rem', marginBottom: '1rem' }}>Reviews ({data.reviewCount})</h3>
 
         {/* Submit review form */}
         <div className="glass-panel" style={{ padding: '1.25rem', marginBottom: '1.25rem' }}>
@@ -236,7 +236,7 @@ export const AttractionDetail: FC<AttractionDetailProps> = ({ attractionId, onBa
                 rows={3}
                 value={reviewComment}
                 onChange={(e) => setReviewComment(e.target.value)}
-                style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)', padding: '0.6rem', borderRadius: '4px', color: '#fff' }}
+                style={{ background: 'var(--bg-input)', border: '1px solid var(--border)', padding: '0.6rem', borderRadius: '4px', color: 'var(--text-main)', fontSize: '0.9rem' }}
               />
               {submitError && <div style={{ color: '#fca5a5', fontSize: '0.85rem' }}>{submitError}</div>}
               <button type="submit" disabled={submitting} className="btn-primary" style={{ alignSelf: 'flex-start', padding: '0.5rem 1.25rem', opacity: submitting ? 0.7 : 1 }}>
@@ -259,7 +259,7 @@ export const AttractionDetail: FC<AttractionDetailProps> = ({ attractionId, onBa
           {data.reviews.map((r) => (
             <div key={r.id} className="glass-panel" style={{ padding: '1rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontWeight: 700, color: '#fff' }}>{r.userName}</span>
+                <span style={{ fontWeight: 700, color: 'var(--text-heading)' }}>{r.userName}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
                   {[1, 2, 3, 4, 5].map((n) => (
                     <Star key={n} size={14} color="#f59e0b" fill={n <= r.rating ? '#f59e0b' : 'none'} />

@@ -275,3 +275,11 @@ C:\Users\TN-99647\Documents\Travel\src\TravelBD.Api\obj\Debug\net9.0\refint\Trav
 C:\Users\TN-99647\Documents\Travel\src\TravelBD.Api\obj\Debug\net9.0\TravelBD.Api.pdb
 C:\Users\TN-99647\Documents\Travel\src\TravelBD.Api\obj\Debug\net9.0\TravelBD.Api.genruntimeconfig.cache
 C:\Users\TN-99647\Documents\Travel\src\TravelBD.Api\obj\Debug\net9.0\ref\TravelBD.Api.dll
+D:\Travel\src\TravelBD.Api\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Travel\src\TravelBD.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Travel\src\TravelBD.Api\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Travel\src\TravelBD.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+D:\Travel\src\TravelBD.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+D:\Travel\src\TravelBD.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Travel\src\TravelBD.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+D:\Travel\src\TravelBD.Api\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll

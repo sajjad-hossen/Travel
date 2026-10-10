@@ -81,7 +81,7 @@ public class LocationRepository : ILocationRepository
             location.Attractions.Select(MapAttraction).ToList(),
             location.Accommodations.Select(ac => new AccommodationDto(
                 ac.Id, ac.Name, ac.BudgetLevel.ToString(), ac.ApproxPriceRange,
-                ac.Address, ac.ContactPhone, ac.BookingUrl, ac.Rating, ac.HighlightFeature
+                ac.Address, ac.ContactPhone, ac.BookingUrl, ac.Rating, ac.HighlightFeature, ac.ImageUrl
             )).ToList(),
             location.Advisories.Select(ad => new AdvisoryDto(
                 ad.Id, ad.Category, ad.Title, ad.Content, ad.IsMandatory

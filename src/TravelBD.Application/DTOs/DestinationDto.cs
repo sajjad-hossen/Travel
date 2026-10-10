@@ -52,7 +52,8 @@ public record AccommodationDto(
     string? ContactPhone,
     string? BookingUrl,
     double Rating,
-    string? HighlightFeature
+    string? HighlightFeature,
+    string? ImageUrl
 );
 
 public record AdvisoryDto(

@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 3,
   "targets": {
     "net9.0": {}
   },
@@ -8,23 +8,23 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\TN-99647\\.nuget\\packages\\": {},
+    "C:\\Users\\ACT\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Domain\\TravelBD.Domain.csproj",
+      "projectUniqueName": "D:\\Travel\\src\\TravelBD.Domain\\TravelBD.Domain.csproj",
       "projectName": "TravelBD.Domain",
-      "projectPath": "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Domain\\TravelBD.Domain.csproj",
-      "packagesPath": "C:\\Users\\TN-99647\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Domain\\obj\\",
+      "projectPath": "D:\\Travel\\src\\TravelBD.Domain\\TravelBD.Domain.csproj",
+      "packagesPath": "C:\\Users\\ACT\\.nuget\\packages\\",
+      "outputPath": "D:\\Travel\\src\\TravelBD.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\TN-99647\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ACT\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -37,7 +37,6 @@
       },
       "frameworks": {
         "net9.0": {
-          "framework": "net9.0",
           "targetAlias": "net9.0",
           "projectReferences": {}
         }
@@ -52,11 +51,10 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.400"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
-        "framework": "net9.0",
         "targetAlias": "net9.0",
         "imports": [
           "net461",
@@ -74,7 +72,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -16,4 +16,5 @@ public class Accommodation
     public string? BookingUrl { get; set; }
     public double Rating { get; set; } = 4.0;
     public string? HighlightFeature { get; set; }  // e.g. "Sea view balcony"
+    public string? ImageUrl { get; set; }
 }

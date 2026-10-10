@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 3,
   "targets": {
     "net9.0": {
       "Humanizer.Core/2.14.1": {
@@ -3179,23 +3179,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\TN-99647\\.nuget\\packages\\": {},
+    "C:\\Users\\ACT\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Api\\TravelBD.Api.csproj",
+      "projectUniqueName": "D:\\Travel\\src\\TravelBD.Api\\TravelBD.Api.csproj",
       "projectName": "TravelBD.Api",
-      "projectPath": "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Api\\TravelBD.Api.csproj",
-      "packagesPath": "C:\\Users\\TN-99647\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Api\\obj\\",
+      "projectPath": "D:\\Travel\\src\\TravelBD.Api\\TravelBD.Api.csproj",
+      "packagesPath": "C:\\Users\\ACT\\.nuget\\packages\\",
+      "outputPath": "D:\\Travel\\src\\TravelBD.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\TN-99647\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ACT\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3208,14 +3208,13 @@
       },
       "frameworks": {
         "net9.0": {
-          "framework": "net9.0",
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Application\\TravelBD.Application.csproj": {
-              "projectPath": "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Application\\TravelBD.Application.csproj"
+            "D:\\Travel\\src\\TravelBD.Application\\TravelBD.Application.csproj": {
+              "projectPath": "D:\\Travel\\src\\TravelBD.Application\\TravelBD.Application.csproj"
             },
-            "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Infrastructure\\TravelBD.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\TN-99647\\Documents\\Travel\\src\\TravelBD.Infrastructure\\TravelBD.Infrastructure.csproj"
+            "D:\\Travel\\src\\TravelBD.Infrastructure\\TravelBD.Infrastructure.csproj": {
+              "projectPath": "D:\\Travel\\src\\TravelBD.Infrastructure\\TravelBD.Infrastructure.csproj"
             }
           }
         }
@@ -3230,11 +3229,10 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.400"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
-        "framework": "net9.0",
         "targetAlias": "net9.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": {
@@ -3263,7 +3261,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
