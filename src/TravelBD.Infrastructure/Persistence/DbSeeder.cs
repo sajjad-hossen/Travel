@@ -647,4 +647,955 @@ public static class DbSeeder
         await context.DestinationAdvisories.AddRangeAsync(advisories);
         await context.SaveChangesAsync();
     }
+
+    // ── Extended 50-Location Seed ─────────────────────────────────────────────
+    public static async Task SeedExtendedLocationsAsync(TravelDbContext context)
+    {
+        // Guard: only run if fewer than 15 locations exist (base seed = 11)
+        if (await context.Locations.CountAsync() >= 15)
+            return;
+
+        var extended = new List<Location>
+        {
+            // ── DHAKA DIVISION ─────────────────────────────────────────────
+            new Location
+            {
+                Name = "Narayanganj",
+                BanglaName = "নারায়ণগঞ্জ",
+                Slug = "narayanganj",
+                Type = LocationType.District,
+                District = "Narayanganj",
+                Division = "Dhaka",
+                Latitude = 23.6238,
+                Longitude = 90.4997,
+                IsMajorHub = true,
+                IsTouristDestination = true,
+                Description = "Industrial port city on the Shitalakshya river, home to Sonargaon — the ancient capital of Bengal — and the haunting Panam City ruins.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200"
+            },
+            new Location
+            {
+                Name = "Sonargaon",
+                BanglaName = "সোনারগাঁ",
+                Slug = "sonargaon",
+                Type = LocationType.TouristSpot,
+                District = "Narayanganj",
+                Division = "Dhaka",
+                Latitude = 23.6542,
+                Longitude = 90.5960,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Medieval capital of Bengal featuring Panam City ghost town, Bangladesh Folk Art Museum, and labyrinthine terracotta merchant mansions.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200"
+            },
+            new Location
+            {
+                Name = "Manikganj",
+                BanglaName = "মানিকগঞ্জ",
+                Slug = "manikganj",
+                Type = LocationType.District,
+                District = "Manikganj",
+                Division = "Dhaka",
+                Latitude = 23.8647,
+                Longitude = 90.0042,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Riverside district on the Jamuna plain, entry point for Padma river cruises and the historic Teota Zamindar Palace.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+            },
+            new Location
+            {
+                Name = "Gazipur",
+                BanglaName = "গাজীপুর",
+                Slug = "gazipur",
+                Type = LocationType.District,
+                District = "Gazipur",
+                Division = "Dhaka",
+                Latitude = 23.9999,
+                Longitude = 90.4203,
+                IsMajorHub = true,
+                IsTouristDestination = true,
+                Description = "Gateway to Bhawal National Park, Nuhash Pallí eco resort, and the dense Sal forests north of Dhaka.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200"
+            },
+            new Location
+            {
+                Name = "Munshiganj",
+                BanglaName = "মুন্সীগঞ্জ",
+                Slug = "munshiganj",
+                Type = LocationType.District,
+                District = "Munshiganj",
+                Division = "Dhaka",
+                Latitude = 23.5422,
+                Longitude = 90.5305,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Land of the Bikrampur kingdom, ferry gateway to the Padma Bridge, and home to the ancient Idrakpur Fort.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1200"
+            },
+
+            // ── CHATTOGRAM DIVISION ──────────────────────────────────────────
+            new Location
+            {
+                Name = "Feni",
+                BanglaName = "ফেনী",
+                Slug = "feni",
+                Type = LocationType.District,
+                District = "Feni",
+                Division = "Chattogram",
+                Latitude = 23.0224,
+                Longitude = 91.3967,
+                IsMajorHub = true,
+                IsTouristDestination = false,
+                Description = "Strategic transit corridor on the Dhaka–Chittagong highway; key interchange for travellers heading to Comilla, Noakhali, and Tripura border.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200"
+            },
+            new Location
+            {
+                Name = "Comilla",
+                BanglaName = "কুমিল্লা",
+                Slug = "comilla",
+                Type = LocationType.District,
+                District = "Cumilla",
+                Division = "Chattogram",
+                Latitude = 23.4607,
+                Longitude = 91.1809,
+                IsMajorHub = true,
+                IsTouristDestination = true,
+                Description = "Ancient Mainamati Buddhist heritage city with hilltop monastery ruins and the country's finest Rashmалai sweets.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1200"
+            },
+            new Location
+            {
+                Name = "Noakhali",
+                BanglaName = "নোয়াখালী",
+                Slug = "noakhali",
+                Type = LocationType.District,
+                District = "Noakhali",
+                Division = "Chattogram",
+                Latitude = 22.8696,
+                Longitude = 91.0993,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Coastal delta district and gateway to Nijhum Dwip mangrove island, home to spotted deer herds and nesting migratory birds.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200"
+            },
+            new Location
+            {
+                Name = "Nijhum Dwip",
+                BanglaName = "নিঝুম দ্বীপ",
+                Slug = "nijhum-dwip",
+                Type = LocationType.TouristSpot,
+                District = "Noakhali",
+                Division = "Chattogram",
+                Latitude = 22.0504,
+                Longitude = 90.9738,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Remote island national park teeming with spotted deer, fishing boats, and pristine tidal mangrove channels — accessible only by boat from Hatiya.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=1200"
+            },
+            new Location
+            {
+                Name = "Khagrachhari",
+                BanglaName = "খাগড়াছড়ি",
+                Slug = "khagrachhari",
+                Type = LocationType.TouristSpot,
+                District = "Khagrachhari",
+                Division = "Chattogram",
+                Latitude = 23.1193,
+                Longitude = 91.9847,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Hill district home to Aluutila Mystery Cave, Richhang Waterfall, and the scenic road to Sajek Valley through Dighinala.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200"
+            },
+            new Location
+            {
+                Name = "Teknaf",
+                BanglaName = "টেকনাফ",
+                Slug = "teknaf",
+                Type = LocationType.TouristSpot,
+                District = "Cox's Bazar",
+                Division = "Chattogram",
+                Latitude = 20.8642,
+                Longitude = 92.3011,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Southernmost tip of Bangladesh and ferry port for Saint Martin's Island; bordered by Myanmar's Naf River with unique tidal mangroves.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200"
+            },
+            new Location
+            {
+                Name = "Saint Martin's Island",
+                BanglaName = "সেন্ট মার্টিন দ্বীপ",
+                Slug = "saint-martins-island",
+                Type = LocationType.TouristSpot,
+                District = "Cox's Bazar",
+                Division = "Chattogram",
+                Latitude = 20.6273,
+                Longitude = 92.3239,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Bangladesh's only coral island — coconut-fringed shores, crystal-clear turquoise water, fresh crab BBQ, and sea-turtle nesting beaches.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1200"
+            },
+
+            // ── SYLHET DIVISION ──────────────────────────────────────────────
+            new Location
+            {
+                Name = "Sreemangal",
+                BanglaName = "শ্রীমঙ্গল",
+                Slug = "sreemangal",
+                Type = LocationType.TouristSpot,
+                District = "Moulvibazar",
+                Division = "Sylhet",
+                Latitude = 24.3065,
+                Longitude = 91.7284,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Tea capital of Bangladesh — rolling emerald tea gardens, seven-layer tea, Lawachara rainforest trek, and migratory bird hotspots.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1200"
+            },
+            new Location
+            {
+                Name = "Moulvibazar",
+                BanglaName = "মৌলভীবাজার",
+                Slug = "moulvibazar",
+                Type = LocationType.District,
+                District = "Moulvibazar",
+                Division = "Sylhet",
+                Latitude = 24.4829,
+                Longitude = 91.7774,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Heartland of Sylhet tea belt bordering Tripura, gateway to Hakaluki Haor wetlands and the Baikka Beel bird sanctuary.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200"
+            },
+            new Location
+            {
+                Name = "Sunamganj",
+                BanglaName = "সুনামগঞ্জ",
+                Slug = "sunamganj",
+                Type = LocationType.TouristSpot,
+                District = "Sunamganj",
+                Division = "Sylhet",
+                Latitude = 25.0658,
+                Longitude = 91.3950,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Gateway to Tanguar Haor — the UNESCO Ramsar wetland — and the mystical Shimul forest of Yadukata along the Meghalaya border.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200"
+            },
+            new Location
+            {
+                Name = "Tanguar Haor",
+                BanglaName = "টাঙ্গুয়ার হাওর",
+                Slug = "tanguar-haor",
+                Type = LocationType.TouristSpot,
+                District = "Sunamganj",
+                Division = "Sylhet",
+                Latitude = 25.1597,
+                Longitude = 91.1145,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "UNESCO Ramsar wetland spanning 100 sq km — houseboat nights under the Milky Way, migratory ducks in winter, and crystal-clear Meghalaya hill runoff.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+            },
+            new Location
+            {
+                Name = "Jaflong",
+                BanglaName = "জাফলং",
+                Slug = "jaflong",
+                Type = LocationType.TouristSpot,
+                District = "Sylhet",
+                Division = "Sylhet",
+                Latitude = 25.1556,
+                Longitude = 92.0360,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Breathtaking river pebble delta at the foot of the Khasi Hills where the Piyain River flows in from Meghalaya with turquoise glacial water.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200"
+            },
+            new Location
+            {
+                Name = "Ratargul Swamp Forest",
+                BanglaName = "রাতারগুল জলারবন",
+                Slug = "ratargul",
+                Type = LocationType.TouristSpot,
+                District = "Sylhet",
+                Division = "Sylhet",
+                Latitude = 25.0124,
+                Longitude = 91.8536,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Bangladesh's Amazon — a freshwater swamp forest flooded 8 months a year, navigated exclusively by wooden rowboat through submerged Hijal and Koroch trees.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=1200"
+            },
+            new Location
+            {
+                Name = "Habiganj",
+                BanglaName = "হবিগঞ্জ",
+                Slug = "habiganj",
+                Type = LocationType.District,
+                District = "Habiganj",
+                Division = "Sylhet",
+                Latitude = 24.3742,
+                Longitude = 91.4145,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Oil-gas industrial district on the edge of Sylhet tea country, gateway to Satchari National Park and its rare Hoolock gibbons.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200"
+            },
+
+            // ── RAJSHAHI DIVISION ────────────────────────────────────────────
+            new Location
+            {
+                Name = "Bogura",
+                BanglaName = "বগুড়া",
+                Slug = "bogura",
+                Type = LocationType.District,
+                District = "Bogura",
+                Division = "Rajshahi",
+                Latitude = 24.8465,
+                Longitude = 89.3773,
+                IsMajorHub = true,
+                IsTouristDestination = true,
+                Description = "Gateway to Mahasthangarh — the oldest archaeological site in Bangladesh, a 2,500-year-old fortified city on the Karatoya riverbank.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1200"
+            },
+            new Location
+            {
+                Name = "Mahasthangarh",
+                BanglaName = "মহাস্থানগড়",
+                Slug = "mahasthangarh",
+                Type = LocationType.TouristSpot,
+                District = "Bogura",
+                Division = "Rajshahi",
+                Latitude = 24.9702,
+                Longitude = 89.3392,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Oldest archaeological city in Bangladesh dating to 300 BCE — massive earthen ramparts, Mauryan artifacts, and the sacred Mazaar of Shah Sultan Balkhi.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200"
+            },
+            new Location
+            {
+                Name = "Natore",
+                BanglaName = "নাটোর",
+                Slug = "natore",
+                Type = LocationType.District,
+                District = "Natore",
+                Division = "Rajshahi",
+                Latitude = 24.4103,
+                Longitude = 88.9876,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Home of the legendary Rani Bhabani palace complex and gateway to the Baraichara Wetlands — winter haven for migratory waterfowl.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200"
+            },
+            new Location
+            {
+                Name = "Chapai Nawabganj",
+                BanglaName = "চাঁপাইনবাবগঞ্জ",
+                Slug = "chapai-nawabganj",
+                Type = LocationType.District,
+                District = "Chapai Nawabganj",
+                Division = "Rajshahi",
+                Latitude = 24.5917,
+                Longitude = 88.2743,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Mango capital of Bangladesh — vast Fazli and Langra orchards, Sona Mosque ruins, and the Ganges (Padma) border with India.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1200"
+            },
+            new Location
+            {
+                Name = "Pabna",
+                BanglaName = "পাবনা",
+                Slug = "pabna",
+                Type = LocationType.District,
+                District = "Pabna",
+                Division = "Rajshahi",
+                Latitude = 24.0064,
+                Longitude = 89.2372,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Textile and sugar town on the Padma plain; home to the historic Pabna Zamindar Palace and the country's longest hydraulic sluice gate at Bera.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200"
+            },
+
+            // ── RANGPUR DIVISION ─────────────────────────────────────────────
+            new Location
+            {
+                Name = "Rangpur",
+                BanglaName = "রংপুর",
+                Slug = "rangpur",
+                Type = LocationType.District,
+                District = "Rangpur",
+                Division = "Rangpur",
+                Latitude = 25.7439,
+                Longitude = 89.2752,
+                IsMajorHub = true,
+                IsTouristDestination = false,
+                Description = "Northern divisional capital known for its textile weaving and gateway to Kantajew Temple and the Teesta barrage wetlands.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=1200"
+            },
+            new Location
+            {
+                Name = "Dinajpur",
+                BanglaName = "দিনাজপুর",
+                Slug = "dinajpur",
+                Type = LocationType.District,
+                District = "Dinajpur",
+                Division = "Rangpur",
+                Latitude = 25.6279,
+                Longitude = 88.6330,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Ancient temple city of the north famed for Kantajew terracotta temple, Nayabad Mosque, and the finest Kataribhog aromatic rice in the country.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1200"
+            },
+            new Location
+            {
+                Name = "Kantajew Temple",
+                BanglaName = "কান্তজীউ মন্দির",
+                Slug = "kantajew-temple",
+                Type = LocationType.TouristSpot,
+                District = "Dinajpur",
+                Division = "Rangpur",
+                Latitude = 25.8491,
+                Longitude = 88.6131,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "18th-century nine-spired terracotta Hindu temple with over 15,000 intricate mythological panels — the finest terracotta architecture in Bangladesh.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200"
+            },
+            new Location
+            {
+                Name = "Lalmonirhat",
+                BanglaName = "লালমনিরহাট",
+                Slug = "lalmonirhat",
+                Type = LocationType.District,
+                District = "Lalmonirhat",
+                Division = "Rangpur",
+                Latitude = 25.9923,
+                Longitude = 89.2846,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Teesta river district containing Burimari land port with India, and the unique 'Chitmahals' — historic enclaves exchanged between Bangladesh and India in 2015.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200"
+            },
+            new Location
+            {
+                Name = "Panchagarh",
+                BanglaName = "পঞ্চগড়",
+                Slug = "panchagarh",
+                Type = LocationType.TouristSpot,
+                District = "Panchagarh",
+                Division = "Rangpur",
+                Latitude = 26.3408,
+                Longitude = 88.5558,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Northernmost district of Bangladesh — on clear winter mornings Mount Kanchenjunga is visible from here; also home to the Tea Research Station and zero-point obelisk.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1200"
+            },
+
+            // ── MYMENSINGH DIVISION ──────────────────────────────────────────
+            new Location
+            {
+                Name = "Mymensingh",
+                BanglaName = "ময়মনসিংহ",
+                Slug = "mymensingh",
+                Type = LocationType.District,
+                District = "Mymensingh",
+                Division = "Mymensingh",
+                Latitude = 24.7471,
+                Longitude = 90.4203,
+                IsMajorHub = true,
+                IsTouristDestination = true,
+                Description = "Brahmaputra riverside city featuring the magnificent Alexander Castle, Bangladesh Agricultural University, and access to Boro Haor wetlands.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200"
+            },
+            new Location
+            {
+                Name = "Netrokona",
+                BanglaName = "নেত্রকোনা",
+                Slug = "netrokona",
+                Type = LocationType.TouristSpot,
+                District = "Netrokona",
+                Division = "Mymensingh",
+                Latitude = 24.8703,
+                Longitude = 90.7270,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Haor district bordering Meghalaya — gateway to Birishiri white clay hills, Someshwari riverside, and the colourful Garo tribal culture.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+            },
+            new Location
+            {
+                Name = "Birishiri",
+                BanglaName = "বিরিশিরি",
+                Slug = "birishiri",
+                Type = LocationType.TouristSpot,
+                District = "Netrokona",
+                Division = "Mymensingh",
+                Latitude = 24.9847,
+                Longitude = 90.7741,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Turquoise Someshwari River flowing over white clay and blue clay hills — a photographer's paradise near the Meghalaya border with Garo heritage villages.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200"
+            },
+            new Location
+            {
+                Name = "Sherpur",
+                BanglaName = "শেরপুর",
+                Slug = "sherpur",
+                Type = LocationType.District,
+                District = "Sherpur",
+                Division = "Mymensingh",
+                Latitude = 25.0186,
+                Longitude = 90.0152,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Gateway to Garo Hills buffer zone, Gazni Eco Park, and the unique Madhutila Wildlife Sanctuary bordering Meghalaya.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200"
+            },
+
+            // ── KHULNA DIVISION ──────────────────────────────────────────────
+            new Location
+            {
+                Name = "Sundarbans",
+                BanglaName = "সুন্দরবন",
+                Slug = "sundarbans",
+                Type = LocationType.TouristSpot,
+                District = "Khulna",
+                Division = "Khulna",
+                Latitude = 21.9497,
+                Longitude = 89.1833,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "UNESCO World Heritage mangrove forest — largest in the world, home to the Royal Bengal Tiger, Irrawaddy dolphins, and ancient tidal river channels.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1200"
+            },
+            new Location
+            {
+                Name = "Jessore",
+                BanglaName = "যশোর",
+                Slug = "jessore",
+                Type = LocationType.District,
+                District = "Jessore",
+                Division = "Khulna",
+                Latitude = 23.1664,
+                Longitude = 89.2081,
+                IsMajorHub = true,
+                IsTouristDestination = true,
+                Description = "Flower district of Bangladesh — wholesale gerbera and gladiolus fields; also has the Jessore Cantonment Museum and the historic Shesh Nag temple.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200"
+            },
+            new Location
+            {
+                Name = "Satkhira",
+                BanglaName = "সাতক্ষীরা",
+                Slug = "satkhira",
+                Type = LocationType.TouristSpot,
+                District = "Satkhira",
+                Division = "Khulna",
+                Latitude = 22.7185,
+                Longitude = 89.0705,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Sundarban western gate district featuring Shyamnagar launch terminal, Hijla forest watch-tower camps, and Munshiganj handloom weavers.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1200"
+            },
+            new Location
+            {
+                Name = "Kushtia",
+                BanglaName = "কুষ্টিয়া",
+                Slug = "kushtia",
+                Type = LocationType.District,
+                District = "Kushtia",
+                Division = "Khulna",
+                Latitude = 23.9014,
+                Longitude = 89.1191,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Spiritual heartland of the Baul tradition — birthplace of Lalon Shah, Tagore's Shilaidaha Kuthibari estate on the Padma, and country's finest Zari weaving.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200"
+            },
+            new Location
+            {
+                Name = "Shilaidaha Kuthibari",
+                BanglaName = "শিলাইদহ কুঠিবাড়ি",
+                Slug = "shilaidaha-kuthibari",
+                Type = LocationType.TouristSpot,
+                District = "Kushtia",
+                Division = "Khulna",
+                Latitude = 24.0432,
+                Longitude = 89.0684,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Rabindranath Tagore's riverside estate where he composed much of Gitanjali — preserved with his original furniture, boats, and gardens on the Padma bank.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200"
+            },
+            new Location
+            {
+                Name = "Mongla",
+                BanglaName = "মোংলা",
+                Slug = "mongla",
+                Type = LocationType.TouristSpot,
+                District = "Bagerhat",
+                Division = "Khulna",
+                Latitude = 22.4836,
+                Longitude = 89.5895,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Primary launch port for Sundarban tiger territory forest safaris, Karamjal breeding centre for Bengal tigers and saltwater crocodiles.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200"
+            },
+            new Location
+            {
+                Name = "Bagerhat",
+                BanglaName = "বাগেরহাট",
+                Slug = "bagerhat",
+                Type = LocationType.TouristSpot,
+                District = "Bagerhat",
+                Division = "Khulna",
+                Latitude = 22.6602,
+                Longitude = 89.7895,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "UNESCO World Heritage site — Mosque City of Bagerhat featuring the magnificent 60-Dome Mosque (Shait Gumbad) built by Khan Jahan Ali in the 15th century.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1200"
+            },
+
+            // ── BARISHAL DIVISION ────────────────────────────────────────────
+            new Location
+            {
+                Name = "Bhola",
+                BanglaName = "ভোলা",
+                Slug = "bhola",
+                Type = LocationType.District,
+                District = "Bhola",
+                Division = "Barishal",
+                Latitude = 22.6908,
+                Longitude = 90.6588,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Bangladesh's largest river island district in the Bay of Bengal delta — famous for Char Kukri Mukri forest island with its unique spotted deer population.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=1200"
+            },
+            new Location
+            {
+                Name = "Patuakhali",
+                BanglaName = "পটুয়াখালী",
+                Slug = "patuakhali",
+                Type = LocationType.District,
+                District = "Patuakhali",
+                Division = "Barishal",
+                Latitude = 22.3596,
+                Longitude = 90.3296,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Coastal district gateway to Kuakata Beach — the only sea beach in Bangladesh where you can see both sunrise and sunset from the same point.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200"
+            },
+            new Location
+            {
+                Name = "Kuakata",
+                BanglaName = "কুয়াকাটা",
+                Slug = "kuakata",
+                Type = LocationType.TouristSpot,
+                District = "Patuakhali",
+                Division = "Barishal",
+                Latitude = 21.8298,
+                Longitude = 90.1200,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "The Daughter of the Sea — a 30-km beach where both sunrise AND sunset are visible from the same shore, with Rakhain Buddhist fisher villages nearby.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200"
+            },
+            new Location
+            {
+                Name = "Pirojpur",
+                BanglaName = "পিরোজপুর",
+                Slug = "pirojpur",
+                Type = LocationType.District,
+                District = "Pirojpur",
+                Division = "Barishal",
+                Latitude = 22.5841,
+                Longitude = 89.9741,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Floating guava market destination — Swarupkathi's thousands of guava orchards are harvested by boat in one of the most unique river markets in South Asia.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1200"
+            },
+            new Location
+            {
+                Name = "Jhalokati",
+                BanglaName = "ঝালকাঠি",
+                Slug = "jhalokati",
+                Type = LocationType.District,
+                District = "Jhalokati",
+                Division = "Barishal",
+                Latitude = 22.6407,
+                Longitude = 90.1988,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Tiny canal-crisscrossed district famed for the Atghora canal boat journey — a floating village surrounded by sapota (sofeda) and betel nut farms.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1200"
+            },
+
+            // ── ADDITIONAL TOURIST SPOTS ─────────────────────────────────────
+            new Location
+            {
+                Name = "Srimangal Tea Gardens",
+                BanglaName = "শ্রীমঙ্গল চা বাগান",
+                Slug = "srimangal-tea-gardens",
+                Type = LocationType.TouristSpot,
+                District = "Moulvibazar",
+                Division = "Sylhet",
+                Latitude = 24.3023,
+                Longitude = 91.7264,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Finlay and Duncan tea estates stretching over 3,000 acres of rolling emerald hills — the source of Bangladesh's world-famous premium Orthodox tea.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1200"
+            },
+            new Location
+            {
+                Name = "Jaipurhat",
+                BanglaName = "জয়পুরহাট",
+                Slug = "jaipurhat",
+                Type = LocationType.District,
+                District = "Joypurhat",
+                Division = "Rajshahi",
+                Latitude = 25.1031,
+                Longitude = 89.0229,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Small sugarcane district with the ancient Pundra terracotta site and the unique Nandail Dighi royal reservoir — a quiet heritage gem in the north.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200"
+            },
+            new Location
+            {
+                Name = "Naogaon",
+                BanglaName = "নওগাঁ",
+                Slug = "naogaon",
+                Type = LocationType.TouristSpot,
+                District = "Naogaon",
+                Division = "Rajshahi",
+                Latitude = 24.7936,
+                Longitude = 88.9316,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Home of Paharpur Buddhist Monastery (Somapura Mahavihara) — the largest Buddhist monastery south of the Himalayas, a UNESCO World Heritage Site.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1200"
+            },
+            new Location
+            {
+                Name = "Paharpur Buddhist Monastery",
+                BanglaName = "পাহাড়পুর বৌদ্ধ বিহার",
+                Slug = "paharpur",
+                Type = LocationType.TouristSpot,
+                District = "Naogaon",
+                Division = "Rajshahi",
+                Latitude = 25.0303,
+                Longitude = 88.9783,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "UNESCO World Heritage ruins of the 8th-century Somapura Mahavihara — largest Buddhist monastery south of the Himalayas with over 177 meditation cells.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200"
+            },
+            new Location
+            {
+                Name = "Sirajganj",
+                BanglaName = "সিরাজগঞ্জ",
+                Slug = "sirajganj",
+                Type = LocationType.District,
+                District = "Sirajganj",
+                Division = "Rajshahi",
+                Latitude = 24.4533,
+                Longitude = 89.7058,
+                IsMajorHub = true,
+                IsTouristDestination = false,
+                Description = "Jamuna riverside district at the base of the Bangabandhu Bridge; transit hub for western route trains and major weaving town for Tant cotton sarees.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+            },
+            new Location
+            {
+                Name = "Tangail",
+                BanglaName = "টাঙ্গাইল",
+                Slug = "tangail",
+                Type = LocationType.District,
+                District = "Tangail",
+                Division = "Dhaka",
+                Latitude = 24.2513,
+                Longitude = 89.9167,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Saree weaving capital at the confluence of three rivers; home to Atia Mosque, Dhanbari Nawab Palace, and the scenic Madhupur Sal forest.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200"
+            },
+            new Location
+            {
+                Name = "Narsingdi",
+                BanglaName = "নরসিংদী",
+                Slug = "narsingdi",
+                Type = LocationType.District,
+                District = "Narsingdi",
+                Division = "Dhaka",
+                Latitude = 23.9215,
+                Longitude = 90.7148,
+                IsMajorHub = false,
+                IsTouristDestination = false,
+                Description = "Textile and fruit district east of Dhaka along the Meghna; a key transit corridor for travellers heading toward Comilla and Chittagong by road.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200"
+            },
+            new Location
+            {
+                Name = "Kishoreganj",
+                BanglaName = "কিশোরগঞ্জ",
+                Slug = "kishoreganj",
+                Type = LocationType.TouristSpot,
+                District = "Kishoreganj",
+                Division = "Dhaka",
+                Latitude = 24.4443,
+                Longitude = 90.7759,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Haor heartland district featuring the vast Hakaluki and Nikli Haor wetlands — magical boat journeys through submerged paddy plains in the monsoon season.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+            },
+            new Location
+            {
+                Name = "Chandpur",
+                BanglaName = "চাঁদপুর",
+                Slug = "chandpur",
+                Type = LocationType.District,
+                District = "Chandpur",
+                Division = "Chattogram",
+                Latitude = 23.2333,
+                Longitude = 90.6517,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Hilsa fish capital of Bangladesh at the confluence of Padma, Meghna, and Dakatia rivers — overnight launches from Dhaka arrive at dawn with stunning river views.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1200"
+            },
+            new Location
+            {
+                Name = "Netrakona Birishiri",
+                BanglaName = "বিরিশিরি নেত্রকোনা",
+                Slug = "birishiri-someshwari",
+                Type = LocationType.TouristSpot,
+                District = "Netrokona",
+                Division = "Mymensingh",
+                Latitude = 25.0001,
+                Longitude = 90.7602,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Someshwari River with its brilliant turquoise water running through white-clay hills, Garo Christian community villages, and seasonal guava-river markets.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200"
+            },
+            new Location
+            {
+                Name = "Kurigram",
+                BanglaName = "কুড়িগ্রাম",
+                Slug = "kurigram",
+                Type = LocationType.District,
+                District = "Kurigram",
+                Division = "Rangpur",
+                Latitude = 25.8063,
+                Longitude = 89.6360,
+                IsMajorHub = false,
+                IsTouristDestination = false,
+                Description = "Remote Teesta-Brahmaputra char district in the far north; char island communities with unique lifestyle accessible by country boat across braided river channels.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200"
+            },
+            new Location
+            {
+                Name = "Gaibandha",
+                BanglaName = "গাইবান্ধা",
+                Slug = "gaibandha",
+                Type = LocationType.District,
+                District = "Gaibandha",
+                Division = "Rangpur",
+                Latitude = 25.3286,
+                Longitude = 89.5286,
+                IsMajorHub = false,
+                IsTouristDestination = false,
+                Description = "Jamuna–Teesta char district with unique Santali tribal communities; transit point for travellers going to Bogura and Rangpur from Dhaka.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200"
+            },
+            new Location
+            {
+                Name = "Meherpur",
+                BanglaName = "মেহেরপুর",
+                Slug = "meherpur",
+                Type = LocationType.TouristSpot,
+                District = "Meherpur",
+                Division = "Khulna",
+                Latitude = 23.7621,
+                Longitude = 88.6318,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Historic Mujibnagar — the provisional capital of independent Bangladesh in 1971; the Mujibnagar Complex with original mango grove and memorial are must visits.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1200"
+            },
+            new Location
+            {
+                Name = "Chuadanga",
+                BanglaName = "চুয়াডাঙ্গা",
+                Slug = "chuadanga",
+                Type = LocationType.District,
+                District = "Chuadanga",
+                Division = "Khulna",
+                Latitude = 23.6401,
+                Longitude = 88.8413,
+                IsMajorHub = false,
+                IsTouristDestination = false,
+                Description = "India–Bangladesh border district along the Mathabhanga river with the Darshana land port — one of the busiest rail crossings between the two countries.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200"
+            },
+            new Location
+            {
+                Name = "Magura",
+                BanglaName = "মাগুরা",
+                Slug = "magura",
+                Type = LocationType.District,
+                District = "Magura",
+                Division = "Khulna",
+                Latitude = 23.4873,
+                Longitude = 89.4193,
+                IsMajorHub = false,
+                IsTouristDestination = false,
+                Description = "Small agro-processing district on the Nabaganga river; transit passage for travellers heading south from Dhaka towards the Sundarban coast.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1200"
+            },
+            new Location
+            {
+                Name = "Narail",
+                BanglaName = "নড়াইল",
+                Slug = "narail",
+                Type = LocationType.District,
+                District = "Narail",
+                Division = "Khulna",
+                Latitude = 23.1724,
+                Longitude = 89.5122,
+                IsMajorHub = false,
+                IsTouristDestination = true,
+                Description = "Birthplace of legendary artist S.M. Sultan; the Naldanga Zamindar Palace and Chitra River bank are quiet heritage getaways from Khulna city.",
+                HeroImageUrl = "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200"
+            },
+        };
+
+        // Fix: Habiganj longitude was stored as string above, correct it
+        var habiganj = extended.FirstOrDefault(l => l.Slug == "habiganj");
+        if (habiganj != null) habiganj.Longitude = 91.4145;
+
+        await context.Locations.AddRangeAsync(extended);
+        await context.SaveChangesAsync();
+    }
 }

@@ -70,6 +70,7 @@ using (var scope = app.Services.CreateScope())
     }
 
     await DbSeeder.SeedAsync(db);
+    await DbSeeder.SeedExtendedLocationsAsync(db);
 }
 
 // ── Middleware Pipeline ───────────────────────────────────────────────────────
